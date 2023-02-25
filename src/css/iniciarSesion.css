@@ -1,3 +1,137 @@
 body{
     background-color: #0A4333;
 }
+
+.containerInicioSesion{
+    position: absolute;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    width: 85%;
+    height: 50%;
+    background-color: #13684B;
+    top: 30%;
+    left: 8%;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    z-index: -1;
+}
+
+.titulo{
+    color: #FFFFFF;
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    font-family: 'Segoe UI';
+    font-style: normal;
+}
+
+.rayaTitulo{
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.containerInterno{
+    position: absolute;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    top: 23%;
+    height: 73%;
+    width: 90%;
+    background-color: #0A4333;
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.correoInicioSesion{
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 10px;
+    color: #FFFFFF;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 170%;
+    line-height: 24px;
+}
+
+.containerCorreo{
+    position: absolute;
+    top: 65px;
+    width: 90%;
+    height: 10%;
+    background-color: #BBBBBB;
+    border-radius: 10px;
+}
+
+.passwordInicioSesion{
+    position: absolute;
+    margin-top: 110px;
+    margin-left: 10px;
+    color: #FFFFFF;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 170%;
+    line-height: 24px;
+}
+
+.containerPassword{
+    position: absolute;
+    top: 145px;
+    width: 90%;
+    height: 10%;
+    background-color: #BBBBBB;
+    border-radius: 10px;
+}
+
+.olvidarContraseña{
+    position: absolute;
+    margin-top: 185px;
+    margin-left: 10px;
+    color: #FFFFFF;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 95%;
+    line-height: 24px;
+    text-decoration: none;
+}
+
+a{
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+a:hover{
+    color: #BBBBBB;
+}
+
+.botonInicio{
+    position: absolute;
+    top: 230px;
+    left: 20px;
+    height: 70px;
+    background: #E5C034;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.botonRegistro{
+    position: absolute;
+    top: 230px;
+    right: 20px;
+    height: 70px;
+    width: 120px;
+    background: #E5C034;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+}

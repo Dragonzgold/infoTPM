@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import IniciarSesion from './Components/IniciarSesion';
+import RecuperarPassword from './Components/RecuperarPassword';
 import NavbarTPM from "./Components/NavbarTPM";
 
 function App() {
@@ -9,8 +10,8 @@ function App() {
       element: <IniciarSesion />
     },
     {
-      path: '/no',
-      element: <NavbarTPM />
+      path: '/RecuperarPassword',
+      element: <RecuperarPassword/>
     }
   ])
   return (
