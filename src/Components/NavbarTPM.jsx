@@ -24,17 +24,17 @@ export default function NavbarTPM() {
         <Collapse isOpen={!collapsed} navbar className="desplegable">
           <Nav navbar>
             <NavItem >
-              <NavLink href="/components/" className='primeraOpcion'>Perfil</NavLink>
+              <NavLink href="/" className='primeraOpcion'>Perfil</NavLink>
             </NavItem>
             <hr className="lineaRecta1"/>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap" >
+              <NavLink href="/" >
                 <p className="opcion2">Lineas</p>
               </NavLink>
             </NavItem>
             <hr className="lineaRecta2"/>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap" >
+              <NavLink href="/" >
                 <p className="opcion3">Mapa</p>
               </NavLink>
             </NavItem>

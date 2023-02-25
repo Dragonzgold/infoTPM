@@ -23,7 +23,7 @@ export default function IniciarSesion(){
                         <Link to="/RecuperarPassword">¿Olvidaste la contraseña?</Link>
                     </h3>
                     <button className='botonInicio'>Iniciar Sesión</button>
-                    <button className='botonRegistro'>Registrar</button>
+                    <Link to="/RegistrarUsuario"><button className='botonRegistro'>Registrar</button></Link>
                 </div>
 
             </div>

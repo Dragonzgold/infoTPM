@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import IniciarSesion from './Components/IniciarSesion';
 import RecuperarPassword from './Components/RecuperarPassword';
+import RegistrarUsuario from './Components/RegistrarUsuario';
 import NavbarTPM from "./Components/NavbarTPM";
 
 function App() {
@@ -12,6 +13,10 @@ function App() {
     {
       path: '/RecuperarPassword',
       element: <RecuperarPassword/>
+    },
+    {
+      path: '/RegistrarUsuario',
+      element: <RegistrarUsuario/>
     }
   ])
   return (
