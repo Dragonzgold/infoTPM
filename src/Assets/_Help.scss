@@ -1,0 +1,38 @@
+.help-container {
+    max-width: 800px;
+    margin: 15% auto;
+    padding: 50px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.rdw-faq-title {
+    color: #2c3e50;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.rdw-faq-content {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+}
+
+.rdw-faq-title.active {
+    color: #007bff;
+}
+
+.rdw-faq-title-icon {
+    display: none;
+}
+
+.rdw-faq-row {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 20px 0;
+}
+
+.rdw-faq-row:last-of-type {
+    border-bottom: none;
+}

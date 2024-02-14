@@ -1,0 +1,69 @@
+.containerUsers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 90vh;
+    width: 80%;
+    margin: auto;
+    margin-top: 5em;
+    margin-bottom: 5em;
+    background-color: #13684B;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    min-width: 850px;
+    overflow-x: auto;
+
+    .tituloUser {
+        color: #FFFFFF;
+        margin-bottom: 1.3em;
+        text-align: center;
+        font-family: 'Segoe UI';
+        font-style: normal;
+        margin-top: 1em;
+
+        .rayaTitulo {
+            background-color: #E5C034;
+            border: 1px solid #E5C034;
+        }
+    }
+
+    h3{
+        color: #FFFFFF;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        text-align: center;
+        font-family: 'Segoe UI';
+        font-style: normal;
+    }
+
+    .btn{
+        margin: auto;
+        margin-top: 1em;
+    }
+
+    Table{
+        text-align: center;
+    }
+
+    .userTable td{
+        color: #000000;
+        background-color: #FFFFFF;
+        .btn{
+            margin: 1em 0.5em;
+        }
+    }
+    .userTable tr{
+        color: #FFFFFF;
+    }
+}
+
+
+@media screen and (max-width:450px) {
+    .containerUsers {
+        margin: 0;
+        margin-top: 20em;
+        margin-bottom: 5em;
+    }
+}
+
+// Path: src\Assets\_Users.scss

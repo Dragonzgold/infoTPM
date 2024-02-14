@@ -1,0 +1,233 @@
+.prueba{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 7rem;
+    height: 7rem;
+    left: 9vw;
+    top: 88px;
+    background: #13684B;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 100%;
+
+    .circuloFace{
+        position: relative;
+        width: 40px;
+        height: 31.36px;
+        background: #DFDFDF;
+        border-radius: 100%;
+        box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+        margin-bottom: .3rem;
+    }
+
+    .circuloBody{
+        position: relative;
+        width: 51.2px;
+        height: 24.83px;
+        border-radius: 100% 100% 0 0;
+        background: #DFDFDF;
+        box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+}
+
+.containerNombre{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .nombreCuenta{
+            position: relative;
+            color: #FFFFFF;
+            text-align: center;
+            font-family: 'Segoe UI';
+            font-style: normal;
+            top: -3vw;
+            font-size: 5.5vw;
+            margin-bottom: -1.5vw;
+    
+        .rayaTituloP{
+            background-color: #E5C034;
+            border: 1px solid #E5C034;
+        }
+    
+        @media screen and (max-width: 700px){
+            margin-left: 7rem;
+            top: -1rem;
+            font-size: 8vw;
+        }
+    }
+    .CorreoElectronico{
+        position: relative;
+        color: #BBBBBB;
+        font-size: 1.7vw;
+    }
+
+    @media screen and (max-width: 700px){
+        .CorreoElectronico{
+            margin-left: 7rem;
+            font-size: 2.5vw;
+        }
+    }
+
+    .numeroUsuario{
+        position: relative;
+        color: #BBBBBB;
+        font-size: 1.7vw;
+    }
+
+    @media screen and (max-width: 700px){
+        .numeroUsuario{
+            position: relative;
+            font-size: 2.5vw;
+        }
+    }
+}
+
+.containerBody{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    height: 230vh;
+    width: 100%;
+    margin: auto;
+    margin-top: 2em;
+    background-color: #13684B;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+    .titleRutasF{
+        margin-top: 1rem;
+        color: #DFDFDF;
+    }
+    .rayaTituloP{
+        background-color: #E5C034;
+        border: 1px solid #E5C034;
+    }
+
+    .contentP {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        margin-top: -17rem;
+    
+        .col{
+            margin-bottom: 1rem;
+    
+            .cardLine {
+                display: flex;
+                flex-direction: column;
+                background-color: #13684B;
+                width: 95vw;
+                height: 100%;
+                border-radius: 10px;
+                box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+        
+                .card-head {
+                    color: #ffffff;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    text-align: start;
+                }
+        
+                .card-body {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    background-color: #0A4333;
+                    width: 100%;
+                    height: 100%;
+                    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+        
+                    .card-tittle {
+                        font-family: 'Segoe UI';
+                        padding: 0 1rem;
+                        color: #ffffff;
+                        font-size: 1.5rem;
+                        font-weight: 400;
+                        text-align: start;
+                    }
+        
+                    .lineButtons {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        align-items: center;
+                        width: 100%;
+                        height: 100%;
+                        color: #ffffff;
+                        margin-bottom: 1rem;
+        
+                        .btn{
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            width: 2.5rem;
+                            height: 2.5rem;
+                            border-radius: 50%;
+                            background-color: #ffffff;
+                            color: #13684B;
+                            font-size: 2rem;
+                            font-weight: 600;
+                            margin: 0 0.5rem;
+                            cursor: pointer;
+                            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+                        }
+                    }
+                }
+        
+                .card-footer{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;
+        
+                    .Horario{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        width: 100%;
+                        height: 100%;
+                        color: #ffffff;
+                        font-size: 1rem;
+                        font-weight: 400;
+                        text-align: start;
+                        padding: 0 1rem;
+                    }
+        
+                    .Pasaje{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        align-items: center;
+                        width: 100%;
+                        height: 100%;
+                        color: #ffffff;
+                        font-size: 1rem;
+                        font-weight: 400;
+                        text-align: start;
+                        padding: 0 1rem;
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 420px){
+        .contentP{
+            margin-top: -80%;
+        }
+    }
+}
