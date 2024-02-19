@@ -130,7 +130,7 @@ function Users() {
         </div>
 
         <div className="row m-4 userTable">
-          <Table responsive striped className='userTable'>
+          <Table bordered responsive striped className='userTable'>
             <thead>
               <tr>
                 <th>#</th>
