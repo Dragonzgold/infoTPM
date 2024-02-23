@@ -11,6 +11,9 @@ import { Users } from '../Pages/Users';
 import { StopsEdit } from '../Pages/StopsEdit';
 import { LinesEdit } from '../Pages/LinesEdit';
 import { LoginBus } from '../Pages/LoginBus';
+import { Buses } from '../Pages/Buses';
+import { Comments } from '../Pages/Comments';
+
 
 const routes = [
   {
@@ -74,9 +77,19 @@ const routes = [
     component: Perfil,
   },
   {
-    title: "LoginBus",
-    path: "/LoginBus",
+    title: 'LoginBus',
+    path: '/LoginBus',
     component: LoginBus,
+  },
+  {
+    title: 'Buses',
+    path: '/Buses',
+    component: Buses,
+  },
+  {
+    title: 'Comments',
+    path: '/Comments',
+    component: Comments,
   },
   {
     title: 'Map',

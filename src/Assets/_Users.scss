@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 90vh;
+    min-height: 48vh;
     width: 80%;
     margin: auto;
     margin-top: 5em;
@@ -14,12 +14,11 @@
     overflow-x: auto;
 
     .tituloUser {
+        margin-top: 2vh;
         color: #FFFFFF;
-        margin-bottom: 1.3em;
         text-align: center;
         font-family: 'Segoe UI';
         font-style: normal;
-        margin-top: 1em;
 
         .rayaTitulo {
             background-color: #E5C034;
@@ -53,9 +52,8 @@
         }
     }
     .userTable tr{
-        color: #000;
+        color: #000000;
         background-color: #FFFFFF;
-        border-radius: 50px;
     }
 }
 

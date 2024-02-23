@@ -5,8 +5,8 @@ export const DataContext = createContext();
 
 export function DataContextProvider(props) {
     const [accessAdminToken, setAccessAdminToken] = useLocalStorage("130314042807", '');
-    const [accessToken, setAccessToken] = useLocalStorage("130314042807", '');
-    const [logged, setLogged] = useLocalStorage('log', false);
+    const [accessToken, setAccessToken] = useLocalStorage("token", '');
+    const [logged, setLogged] = useLocalStorage('logged', false);
     const url = 'https://infotpm-backend-production.up.railway.app';
     const value = {
         logged, setLogged,

@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDataContext } from '../Context/dataContext';
 
 function Account() {
-  // const { url } = useDataContext();
   const history = useHistory();
   const [usu_email, setEmail] = useState('');
   const [usu_password, setPassword] = useState('');
@@ -16,7 +15,7 @@ function Account() {
   const [tkn, setTkn] = useState('');
   // const [error, setError] = useState("");
   // const [attemps, setAttemps] = useState(3);
-  const { setLogged, setAccessToken, logged, url } = useDataContext();
+  const { setLogged, setAccessToken, url } = useDataContext();
   // const [alertVisible, setAlertVisible] = useState(false);
   // const [inputDisabled, setInputDisabled] = useState(false);
 
@@ -32,10 +31,11 @@ function Account() {
   //   }
   // };
 
-  const fetchData = useCallback(async (email, password) => {
+  const fetchData = async (email, password) => {
     try {
       const response = await axios.get(`${url}/Auth/login/${email}/${password}`);
       setAccessToken(response.data.data);
+      console.log(response.data.data)
       const response2 = await axios.get(`${url}/Auth/findByToken/${response.data.data.access_token}`);
       setTkn(response2.data);
       setLogged(true);
@@ -50,17 +50,7 @@ function Account() {
       console.log(error);
       return false;
     }
-  }, [
-    setAccessToken,
-    setLogged,
-    history,
-    url,
-    tkn
-  ]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,10 +103,7 @@ function Account() {
   // };
 
   return (
-    logged ? (
-      <Redirect to="/Perfil" />
-    ) :
-      (<div className='fondo'>
+      <div className='fondo'>
         <div className='containerInicioSesion'>
           <h1 className='titulo'>
             Inicio de Sesión
@@ -165,7 +152,7 @@ function Account() {
             </form>
           </div>
         </div>
-      </div>)
+      </div>
   )
 }
 

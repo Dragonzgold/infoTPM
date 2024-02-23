@@ -9,10 +9,7 @@ function StopsEdit() {
   const [par_lat, setLat] = useState('');
   const [par_long, setLong] = useState('');
   const [par_description, setDesc] = useState('');
-  const [par_linId, setPar_linId] = useState(Number);
-  const [par_img, setPar_img] = useState('');
   const [stop, setStops] = useState([]);
-  const [lines, setLines] = useState([]);
   const [selectedStop, setSelectedStop] = useState(null);
   const [modal, setModal] = useState(false);
   const toggle = () => {
@@ -35,31 +32,20 @@ function StopsEdit() {
     setSearchQuery(event.target.value);
   };
 
-
+  
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(`${url}/Stops`);
       setStops(response.data);
-
+      
     } catch (error) {
       console.log(error);
     }
-  }, [url]);
-
-  const fetchLineData = useCallback(async () => {
-    try {
-      const response = await axios.get(`${url}/Line`);
-      setLines(response.data);
-
-    } catch (error) {
-      console.log(error);
-    }
-  }, [url]);
-
+  },[url]);
+  
   useEffect(() => {
     fetchData();
-    fetchLineData();
-  }, [fetchData, fetchLineData]);
+  }, [fetchData]);
 
   const handleEdit = stop => {
     setSelectedStop(stop);
@@ -87,18 +73,14 @@ function StopsEdit() {
           par_name,
           par_lat,
           par_long,
-          par_description,
-          par_linId,
-          par_img
+          par_description
         });
       } else {
         await axios.post(`${url}/Stops/create`, {
           par_name,
           par_lat,
           par_long,
-          par_description,
-          par_linId,
-          par_img
+          par_description
         });
       }
       setName('');
@@ -143,7 +125,7 @@ function StopsEdit() {
             <Table bordered responsive className='userTable'>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>ID</th>
                   <th>Nombre</th>
                   <th>Latitud</th>
                   <th>Longitud</th>
@@ -154,7 +136,7 @@ function StopsEdit() {
               <tbody>
                 {filteredStops.map((stop, index) => (
                   <tr key={stop.par_id}>
-                    <td>{index + 1}</td>
+                    <td>{index +  1}</td>
                     <td>{stop.par_name}</td>
                     <td>{stop.par_lat}</td>
                     <td>{stop.par_long}</td>
@@ -181,7 +163,7 @@ function StopsEdit() {
         </div>
       </div>
 
-      <Modal className='mt-5' isOpen={modal} size='lg' centered toggle={toggle}>
+      <Modal className='mt-5' isOpen={modal} size='xl' centered toggle={toggle}>
         <ModalHeader toggle={toggle}>Agregar Nueva Parada</ModalHeader>
         <ModalBody>
           <div className="row g-3">
@@ -224,40 +206,6 @@ function StopsEdit() {
                 id="longitud"
                 pattern="^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$"
                 required
-              />
-            </div>
-            <div className="col-md-6">
-              <label for="par_linId" className="form-label">
-                Linea:
-              </label>
-              <Input
-                id="par_linId"
-                name="par_linId"
-                type="select"
-                value={par_linId}
-                placeholderText="Linea"
-                required
-                onChange={(e) => setPar_linId(e.target.value)}
-              >
-                <option >Selecciona un linea</option>
-                {lines.map((line) => (
-                  <option key={line.lin_id} value={line.lin_id}>
-                    {line.lin_name}
-                  </option>
-                ))}
-              </Input>
-            </div>
-            <div className="col-md-6">
-              <label for="par_img" className="form-label">
-                Imagen:
-              </label>
-              <Input
-                id="par_img"
-                name="par_img"
-                type="file"
-                required
-                accept=".jpg,.jpeg,.png,"
-                onChange={(e) => setPar_img(e.target.value)}
               />
             </div>
             <div className="col-md-12">

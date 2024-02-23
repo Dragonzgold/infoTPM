@@ -81,6 +81,13 @@
     text-decoration: none;
   }
 
+  .IconMaker{
+    position: absolute;
+    height: 5vh;
+    padding-left: 1.5vw;
+    padding-bottom: 1vh;
+  }
+
   .botonDesplegable {
     background-color: #ddd;
     margin-bottom: 10px;
@@ -89,7 +96,7 @@
   .desplegable {
     background-color: #0a4333;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin-left: 45vw;
+    margin-left: 72vw;
     margin-right: -25px;
     margin-bottom: -10px;
     width: 100%;
@@ -155,6 +162,7 @@
           margin-top: 10px;
           color: #dfdfdf;
           width: 21vw;
+          max-width: 21vw;
           border-bottom: 1px solid #e5c034;
           padding: 5px 10px;
           text-align: start;

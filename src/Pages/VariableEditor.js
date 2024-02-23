@@ -45,6 +45,19 @@ const VariableEditor = () => {
                         </Link>
                     </Accordion.Panel>
                 </Accordion.Item>
+
+                <Accordion.Item value="buses-ring">
+                    <Accordion.Control className="rdw-faq-title">¿Deseas ver o editar la lista de buses?</Accordion.Control>
+                    <Accordion.Panel className="rdw-faq-content">
+                    Proporcionamos la opcion del administrador de poder visualizar o editar la lista de Buses dentro del sistema.
+                        <br/>
+                        <Link to={'/Buses'} className="btns">
+                            <Button type="button" className="btn btn-primary btn-block" color="success">
+                            Acceder
+                            </Button>
+                        </Link>
+                    </Accordion.Panel>
+                </Accordion.Item>
             </Accordion>
         </div>
     );
