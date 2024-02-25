@@ -1,34 +1,30 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
+import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap';
 import { useDataContext } from '../Context/dataContext';
 
 function Buses() {
-  const [usu_name, setName] = useState('');
-  // const [placaBus, setPlaca] = useState('');
-  const [usu_lastName, setLastname] = useState('');
-  // const [statusBus, setStatus] = useState('');
-  const [usu_email, setEmail] = useState('');
-  // const [linBus, setLinBus] = useState('');
-  const [usu_password, setPassword] = useState('');
-  // const [conductorBus, setConductor] = useState('');
-  const [usuarios, setUsuarios] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [bus_plate, setBusPlate] = useState('');
+  const [bus_status, setBusStatus] = useState('');
+  const [bus_LinId, setBusLinId] = useState('');
+  const [bus_UsuId, setBusUsuId] = useState('');
+  const [buses, setBuses] = useState([]);
+  const [lines, setLines] = useState([]);
+  const [Users, setUsers] = useState([]);
+  const [selectedBus, setSelectedBus] = useState(null);
   const [modal, setModal] = useState(false);
   const { url } = useDataContext();;
   const toggle = () => {
     setModal(!modal)
     if (modal === false) {
-      setName('')
-      setLastname('')
-      setEmail('')
-      setPassword('')
+      setBusPlate('');
+      setBusStatus('');
     }
   };
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredUsuarios = usuarios.filter(user => {
-    const fullName = `${user.usu_name} ${user.usu_lastName}`.toLowerCase();
+  const filteredBuses = buses.filter(bus => {
+    const fullName = `${bus.bus_plate} ${bus.bus_status} ${bus.Line.lin_name} ${bus.user.usu_name} ${bus.user.usu_lastName}`.toLowerCase();
     return fullName.includes(searchQuery.toLowerCase());
   });
 
@@ -38,9 +34,26 @@ function Buses() {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get(`${url}/Users`);
-      setUsuarios(response.data);
-      
+      const response = await axios.get(`${url}/Bus`);
+      setBuses(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url]);
+
+  const fetchDataLines = useCallback(async () => {
+    try {
+      const response = await axios.get(`${url}/line`);
+      setLines(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url]);
+
+  const fetchDataUsers = useCallback(async () => {
+    try {
+      const response = await axios.get(`${url}/users`);
+      setUsers(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -48,47 +61,50 @@ function Buses() {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+    fetchDataLines();
+    fetchDataUsers();
+  }, [fetchData, fetchDataLines, fetchDataUsers]);
 
-  const handleEdit = user => {
-    setSelectedUser(user);
+  const handleEdit = bus => {
+    setSelectedBus(bus);
     toggle();
 
-    setName(user.usu_name);
-    setLastname(user.usu_lastName);
-    setEmail(user.usu_email);
-    setPassword(user.usu_password);
+    setBusPlate(bus.bus_plate);
+    setBusStatus(bus.bus_status);
+    setBusLinId(bus.bus_linId);
+    setBusUsuId(bus.bus_usuId);
   };
 
   const handleSubmit = async event => {
     event.preventDefault();
 
     try {
-      if (selectedUser) {
+      if (selectedBus) {
         await axios.put(
-          `${url}/Users/${selectedUser.usu_id}`,
+          `${url}/Bus/${selectedBus.bus_id}`,
           {
-            usu_name,
-            usu_lastName,
-            usu_email
+            bus_plate,
+            bus_status,
+            bus_usuId: selectedBus.bus_usuId,
+            bus_linId: selectedBus.bus_linId
           });
-        setSelectedUser(null);
+        setSelectedBus(null);
 
       } else {
         await axios.post(
-          `${url}/Auth/register`,
+          `${url}/Bus/create`,
           {
-            usu_name,
-            usu_lastName,
-            usu_email,
-            usu_password
+            bus_plate,
+            bus_status,
+            bus_usuId: bus_UsuId,
+            bus_linId: bus_LinId
           });
       }
 
-      setName('');
-      setLastname('');
-      setEmail('');
-      setPassword('');
+      setBusPlate('');
+      setBusStatus('');
+      setBusLinId('');
+      setBusUsuId('');
       fetchData();
       toggle();
     } catch (error) {
@@ -99,7 +115,7 @@ function Buses() {
   const handleDelete = async id => {
     try {
       await axios.delete(
-        `${url}/Users/${id}`
+        `${url}/Bus/${id}`
       );
       fetchData();
     } catch (error) {
@@ -146,22 +162,23 @@ function Buses() {
               </tr>
             </thead>
             <tbody>
-              {filteredUsuarios.map((user, id) => (
-                <tr key={user.usu_id}>
+              {filteredBuses.map((bus, id) => (
+                <tr key={bus.bus_id}>
                   <td>{id + 1}</td>
-                  <td>{user.usu_name}</td>
-                  <td>{user.usu_lastName}</td>
-                  <td>{user.usu_email}</td>
+                  <td>{bus.bus_plate}</td>
+                  <td>{bus.bus_status}</td>
+                  <td>{bus.Line.lin_name}</td>
+                  <td>{bus.user.usu_name} {bus.user.usu_lastName}</td>
                   <td>
                     <button
                       className="btn btn-danger"
-                      onClick={() => handleDelete(user.usu_id)}
+                      onClick={() => handleDelete(bus.bus_id)}
                     >
                       Eliminar
                     </button>
                     <button
                       className="btn btn-warning"
-                      onClick={() => handleEdit(user)}
+                      onClick={() => handleEdit(bus)}
                     >
                       Editar
                     </button>
@@ -179,55 +196,79 @@ function Buses() {
           <form onSubmit={handleSubmit} className="row g-3">
             <div className="col-md-6">
               <label className="form-label">
-                Nombre:
+                Placa:
               </label>
               <Input
                 type="text"
-                defaultValue={usu_name}
-                onChange={event => setName(event.target.value)}
+                defaultValue={bus_plate}
+                onChange={event => setBusPlate(event.target.value)}
                 className="form-control"
                 id="nombre"
                 required
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">
-                apellido:
-              </label>
+              <Label className="form-label" for="status">
+                Status:
+              </Label>
               <Input
-                type="text"
+                id="status"
+                name="select"
+                type="select"
                 className="form-control"
-                defaultValue={usu_lastName}
-                onChange={event => setLastname(event.target.value)}
-                id="apellido"
+                defaultValue={bus_status}
+                onChange={event => setBusStatus(event.target.value)}
                 required
-              />
+              >
+                <option>
+                  Active
+                </option>
+                <option>
+                  Disactive
+                </option>
+              </Input>
             </div>
             <div className="col-md-6">
-              <label className="form-label">
-                Correo:
-              </label>
+              <Label className="form-label" for="status">
+                Lineas:
+              </Label>
               <Input
-                type="text"
+                id="lines"
+                name="select"
+                type="select"
                 className="form-control"
-                defaultValue={usu_email}
-                onChange={event => setEmail(event.target.value)}
-                id="correo"
+                defaultValue={bus_LinId}
+                onChange={event => setBusLinId(event.target.value)}
                 required
-              />
+              >
+                <option >Selecciona una Linea</option>
+                {lines.map((lin) => (
+                  <option key={lin.lin_id} value={lin.lin_id}>
+                    {lin.lin_name}
+                  </option>
+                ))}
+              </Input>
             </div>
             <div className="col-md-6">
-              <label className="form-label">
-                Contraseña:
-              </label>
+              <Label className="form-label" for="status">
+                Conductor:
+              </Label>
               <Input
-                type="password"
+                id="driver"
+                name="select"
+                type="select"
                 className="form-control"
-                defaultValue={usu_password}
-                onChange={event => setPassword(event.target.value)}
-                id="contraseña"
+                defaultValue={bus_UsuId}
+                onChange={event => setBusUsuId(event.target.value)}
                 required
-              />
+              >
+                <option>Selecciona un conductor</option>
+                {Users.map((user) => (
+                  <option key={user.usu_id} value={user.usu_id}>
+                    {user.usu_name}
+                  </option>
+                ))}
+              </Input>
             </div>
           </form>
         </ModalBody>

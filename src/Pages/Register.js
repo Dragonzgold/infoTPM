@@ -25,7 +25,8 @@ function Register() {
           usu_name,
           usu_lastName,
           usu_email,
-          usu_password
+          usu_password,
+          usu_role : 'user'
         }
       );
 

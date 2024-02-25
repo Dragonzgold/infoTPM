@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
+import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap';
 import { useDataContext } from '../Context/dataContext';
 
 function Users() {
   const [usu_name, setName] = useState('');
   const [usu_lastName, setLastname] = useState('');
   const [usu_email, setEmail] = useState('');
-  const [usu_password, setPassword] = useState('');
+  const [usu_role, setRole] = useState('');
   const [usuarios, setUsuarios] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [modal, setModal] = useState(false);
@@ -18,7 +18,7 @@ function Users() {
       setName('')
       setLastname('')
       setEmail('')
-      setPassword('')
+      setRole('')
     }
   };
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,7 +36,7 @@ function Users() {
     try {
       const response = await axios.get(`${url}/Users`);
       setUsuarios(response.data);
-      
+
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +53,6 @@ function Users() {
     setName(user.usu_name);
     setLastname(user.usu_lastName);
     setEmail(user.usu_email);
-    setPassword(user.usu_password);
   };
 
   const handleSubmit = async event => {
@@ -66,7 +65,8 @@ function Users() {
           {
             usu_name,
             usu_lastName,
-            usu_email
+            usu_email,
+            usu_role
           });
         setSelectedUser(null);
 
@@ -77,14 +77,15 @@ function Users() {
             usu_name,
             usu_lastName,
             usu_email,
-            usu_password
+            usu_password: '12345678',
+            usu_role
           });
       }
 
       setName('');
       setLastname('');
       setEmail('');
-      setPassword('');
+      setRole('');
       fetchData();
       toggle();
     } catch (error) {
@@ -137,6 +138,7 @@ function Users() {
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Correo</th>
+                <th>Rol</th>
                 <th>Funciones</th>
               </tr>
             </thead>
@@ -147,6 +149,7 @@ function Users() {
                   <td>{user.usu_name}</td>
                   <td>{user.usu_lastName}</td>
                   <td>{user.usu_email}</td>
+                  <td>{user.usu_role}</td>
                   <td>
                     <button
                       className="btn btn-danger"
@@ -213,16 +216,29 @@ function Users() {
             </div>
             <div className="col-md-6">
               <label className="form-label">
-                Contraseña:
+                Rol:
               </label>
-              <Input
-                type="password"
-                className="form-control"
-                defaultValue={usu_password}
-                onChange={event => setPassword(event.target.value)}
-                id="contraseña"
-                required
-              />
+              <br />
+              <Label>
+                <Input
+                  type="radio"
+                  value="User"
+                  checked={usu_role === 'User'}
+                  onChange={e => setRole(e.target.value)}
+                />
+                User
+              </Label>
+              &nbsp;
+              <br />
+              <Label>
+                <Input
+                  type="radio"
+                  value="Driver"
+                  checked={usu_role === 'Driver'}
+                  onChange={e => setRole(e.target.value)}
+                />
+                Driver
+              </Label>
             </div>
           </form>
         </ModalBody>

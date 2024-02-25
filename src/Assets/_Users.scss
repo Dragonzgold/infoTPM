@@ -1,69 +1,63 @@
 .containerUsers {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 48vh;
-    width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100vw;
+  margin: auto;
+  margin-top: 5em;
+  background-color: #13684b;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+  .tituloUser {
+    margin-top: 2vh;
+    color: #ffffff;
+    text-align: center;
+    font-family: "Segoe UI";
+    font-style: normal;
+
+    .rayaTitulo {
+      background-color: #e5c034;
+      border: 1px solid #e5c034;
+    }
+  }
+
+  h3 {
+    color: #ffffff;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    text-align: center;
+    font-family: "Segoe UI";
+    font-style: normal;
+  }
+
+  .btn {
     margin: auto;
-    margin-top: 5em;
-    margin-bottom: 5em;
-    background-color: #13684B;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-    min-width: 850px;
-    overflow-x: auto;
+    margin-top: 1em;
+  }
 
-    .tituloUser {
-        margin-top: 2vh;
-        color: #FFFFFF;
-        text-align: center;
-        font-family: 'Segoe UI';
-        font-style: normal;
+  Table {
+    text-align: center;
+  }
 
-        .rayaTitulo {
-            background-color: #E5C034;
-            border: 1px solid #E5C034;
-        }
+  .userTable td {
+    color: #000000;
+    background-color: #ffffff;
+    .btn {
+      margin: 1em 0.5em;
     }
-
-    h3{
-        color: #FFFFFF;
-        margin-top: 1em;
-        margin-bottom: 1em;
-        text-align: center;
-        font-family: 'Segoe UI';
-        font-style: normal;
-    }
-
-    .btn{
-        margin: auto;
-        margin-top: 1em;
-    }
-
-    Table{
-        text-align: center;
-    }
-
-    .userTable td{
-        color: #000000;
-        background-color: #FFFFFF;
-        .btn{
-            margin: 1em 0.5em;
-        }
-    }
-    .userTable tr{
-        color: #000000;
-        background-color: #FFFFFF;
-    }
+  }
+  .userTable tr {
+    color: #000000;
+    background-color: #ffffff;
+  }
 }
 
-
-@media screen and (max-width:450px) {
-    .containerUsers {
-        margin: 0;
-        margin-top: 20em;
-        margin-bottom: 5em;
-    }
+@media screen and (max-width: 845px) {
+  .userTable {
+    width: 85vw;
+  }
 }
 
 // Path: src\Assets\_Users.scss

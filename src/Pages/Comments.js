@@ -1,46 +1,34 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
+import { Button, Table, Input } from 'reactstrap';
 import { useDataContext } from '../Context/dataContext';
 
 function Comments() {
   const { url } = useDataContext();
-  const [par_name, setName] = useState('');
-  const [par_lat, setLat] = useState('');
-  // const [lastName, setNameLast] = useState('');
-  const [par_long, setLong] = useState('');
-  // const [comments, setComments] = useState('');
-  const [par_description, setDesc] = useState('');
-  // const [line, setLine] = useState('');
-  const [stop, setStops] = useState([]);
-  const [selectedStop, setSelectedStop] = useState(null);
-  const [modal, setModal] = useState(false);
-  const toggle = () => {
-    setModal(!modal)
-    if (modal === false) {
-      setName('')
-      setLat('')
-      setLong('')
-      setDesc('')
-    }
-  };
+  const [comments, setComments] = useState([]);
+
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredStops = stop.filter(stop => {
-    const fullName = `${stop.par_name}`.toLowerCase();
+  const filteredComment = comments.filter(com => {
+  
+    const fullName = `
+    ${com.User.usu_name} 
+    ${com.User.usu_lastName} 
+    ${com.User.usu_email} 
+    ${com.line.lin_name} 
+    ${com.com_comment}`.toLowerCase();
+  
     return fullName.includes(searchQuery.toLowerCase());
   });
 
   const handleSearch = event => {
     setSearchQuery(event.target.value);
   };
-
   
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get(`${url}/Stops`);
-      setStops(response.data);
-      
+      const response = await axios.get(`${url}/comment`);
+      setComments(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -50,60 +38,20 @@ function Comments() {
     fetchData();
   }, [fetchData]);
 
-  const handleEdit = stop => {
-    setSelectedStop(stop);
-    toggle();
-
-    setName(stop.par_name);
-    setLat(stop.par_lat);
-    setLong(stop.par_long);
-    setDesc(stop.par_description);
-  };
-
   const handleDelete = async id => {
     try {
-      await axios.delete(`${url}/Stops/${id}`);
+      await axios.delete(`${url}/comment/${id}`);
       fetchData();
     } catch (error) {
       console.log(error);
     }
   };
-
-  const handleSave = async () => {
-    try {
-      if (selectedStop) {
-        await axios.put(`${url}/Stops/${selectedStop.par_id}`, {
-          par_name,
-          par_lat,
-          par_long,
-          par_description
-        });
-      } else {
-        await axios.post(`${url}/Stops/create`, {
-          par_name,
-          par_lat,
-          par_long,
-          par_description
-        });
-      }
-      setName('');
-      setLat('');
-      setLong('');
-      setDesc('');
-      fetchData();
-      toggle();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-
 
   return (
     <div>
       <div className='containerUsers'>
         <h1 className='tituloUser'>
-          Comentario
+          Comentarios
           <div className='rayaTitulo' />
         </h1>
         <div className=" container">
@@ -130,23 +78,17 @@ function Comments() {
                 </tr>
               </thead>
               <tbody>
-                {filteredStops.map((stop, index) => (
-                  <tr key={stop.par_id}>
+                {filteredComment.map((com, index) => (
+                  <tr key={com.com_id}>
                     <td>{index +  1}</td>
-                    <td>{stop.par_name}</td>
-                    <td>{stop.par_lat}</td>
-                    <td>{stop.par_long}</td>
-                    <td>{stop.par_description}</td>
+                    <td>{com.User.usu_name}</td>
+                    <td>{com.User.usu_lastName}</td>
+                    <td>{com.com_comment}</td>
+                    <td>{com.line.lin_name}</td>
                     <td>
                       <Button
-                        color="primary"
-                        onClick={() => handleEdit(stop)}
-                      >
-                        Editar
-                      </Button>
-                      <Button
                         color="danger"
-                        onClick={() => handleDelete(stop.par_id)}
+                        onClick={() => handleDelete(com.com_id)}
                       >
                         Eliminar
                       </Button>
@@ -159,81 +101,6 @@ function Comments() {
         </div>
       </div>
 
-      <Modal className='mt-5' isOpen={modal} size='xl' centered toggle={toggle}>
-        <ModalHeader toggle={toggle}>Agregar Nueva Parada</ModalHeader>
-        <ModalBody>
-          <div className="row g-3">
-            <div className="col-md-12">
-              <label for="nombre" className="form-label">
-                Nombre:
-              </label>
-              <Input
-                type="text"
-                defaultValue={par_name}
-                onChange={e => setName(e.target.value)}
-                className="form-control"
-                id="nombre"
-                required
-              />
-            </div>
-            <div className="col-md-12">
-              <label for="latitud" className="form-label">
-                Latitud:
-              </label>
-              <Input
-                type="text"
-                defaultValue={par_lat}
-                onChange={e => setLat(e.target.value)}
-                className="form-control"
-                id="latitud"
-                pattern="^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$"
-                required
-              />
-            </div>
-            <div className="col-md-12">
-              <label for="longitud" className="form-label">
-                Longitud:
-              </label>
-              <Input
-                type="text"
-                defaultValue={par_long}
-                onChange={e => setLong(e.target.value)}
-                className="form-control"
-                id="longitud"
-                pattern="^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$"
-                required
-              />
-            </div>
-            <div className="col-md-12">
-              <label for="longitud" className="form-label">
-                Descripción:
-              </label>
-              <Input
-                type="text"
-                defaultValue={par_description}
-                onChange={e => setDesc(e.target.value)}
-                className="form-control"
-                id="descripcion"
-              />
-            </div>
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            type="button"
-            onClick={handleSave}
-            color="primary"
-          >
-            Guardar cambios
-          </Button>
-          <Button
-            color="secondary"
-            onClick={toggle}
-          >
-            Cancelar
-          </Button>
-        </ModalFooter>
-      </Modal>
     </div>
   )
 }
