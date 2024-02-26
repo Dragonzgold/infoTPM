@@ -1,115 +1,119 @@
 .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-top: 5rem;
 
-    .col{
-        margin-bottom: 2rem;
+  .col {
+    margin-bottom: 2rem;
 
-        .cardLine {
-            display: flex;
-            flex-direction: column;
-            background-color: #13684B;
-            width: 95vw;
-            height: 100%;
-            border-radius: 10px;
-            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-    
-            .card-head {
-                color: #ffffff;
-                font-size: 1rem;
-                font-weight: 600;
-                text-align: start;
-            }
-    
-            .card-body {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                background-color: #0A4333;
-                width: 100%;
-                height: 100%;
-                box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
-    
-                .card-tittle {
-                    font-family: 'Segoe UI';
-                    padding: 0 1rem;
-                    color: #ffffff;
-                    font-size: 1.5rem;
-                    font-weight: 400;
-                    text-align: start;
-                }
-    
-                .lineButtons {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: flex-end;
-                    align-items: center;
-                    width: 100%;
-                    height: 100%;
-                    color: #ffffff;
-                    margin-bottom: 1rem;
-    
-                    .btn{
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: center;
-                        align-items: center;
-                        width: 2.5rem;
-                        height: 2.5rem;
-                        border-radius: 50%;
-                        background-color: #ffffff;
-                        color: #13684B;
-                        font-size: 2rem;
-                        font-weight: 600;
-                        margin: 0 0.5rem;
-                        cursor: pointer;
-                        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-                    }
-                }
-            }
-    
-            .card-footer{
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-                height: 100%;
-    
-                .Horario{
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: flex-start;
-                    align-items: center;
-                    width: 100%;
-                    height: 100%;
-                    color: #ffffff;
-                    font-size: 1rem;
-                    font-weight: 400;
-                    text-align: start;
-                    padding: 0 1rem;
-                }
-    
-                .Pasaje{
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: flex-end;
-                    align-items: center;
-                    width: 100%;
-                    height: 100%;
-                    color: #ffffff;
-                    font-size: 1rem;
-                    font-weight: 400;
-                    text-align: start;
-                    padding: 0 1rem;
-                }
-            }
+    .cardLine {
+      display: flex;
+      flex-direction: column;
+      background-color: #13684b;
+      width: 95vw;
+      height: 100%;
+      border-radius: 10px;
+      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+      .card-head {
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: start;
+      }
+
+      .card-body {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #0a4333;
+        width: 100%;
+        height: 100%;
+        box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+        .card-tittle {
+          font-family: "Segoe UI";
+          padding: 0 1rem;
+          color: #ffffff;
+          font-size: 1.5rem;
+          font-weight: 400;
+          text-align: start;
         }
+
+        .modalLine {
+          overflow-y: hidden;
+        }
+
+        .lineButtons {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          color: #ffffff;
+          margin-bottom: 1rem;
+
+          .btn {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: #ffffff;
+            color: #13684b;
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 0 0.5rem;
+            cursor: pointer;
+            box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+          }
+        }
+      }
+
+      .card-footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+
+        .Horario {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          color: #ffffff;
+          font-size: 1rem;
+          font-weight: 400;
+          text-align: start;
+          padding: 0 1rem;
+        }
+
+        .Pasaje {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          color: #ffffff;
+          font-size: 1rem;
+          font-weight: 400;
+          text-align: start;
+          padding: 0 1rem;
+        }
+      }
     }
+  }
 }

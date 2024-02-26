@@ -8,8 +8,8 @@ import {
 } from "react-leaflet";
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css'
-import { LocationMarker } from '../Components/LocationMarker'
-// import { LocationTestMarker } from '../Components/LocationTestMarker'
+// import { LocationMarker } from '../Components/LocationMarker'
+import { LocationTestMarker } from '../Components/LocationTestMarker'
 import { IconLocation } from "../Components/IconLocation";
 import { IconLocation2 } from "../Components/IconLocation2";
 import { faBus } from '@fortawesome/free-solid-svg-icons'
@@ -85,8 +85,8 @@ function MapView() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <LocationMarker />
-        {/* <LocationTestMarker/> */}
+        {/* <LocationMarker /> */}
+        <LocationTestMarker/>
         <Polyline pathOptions={limeOptions} positions={List.Guajira} />
         <Polyline pathOptions={blueOptions} positions={List.Veritas} />
         <Polyline pathOptions={redOptions} positions={List.Milagro} />
