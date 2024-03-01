@@ -145,7 +145,7 @@ function StopsEdit() {
             <Table bordered responsive className='userTable'>
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>#</th>
                   <th>Nombre</th>
                   <th>Latitud</th>
                   <th>Longitud</th>

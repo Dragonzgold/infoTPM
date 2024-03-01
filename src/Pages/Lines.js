@@ -25,12 +25,21 @@ import {
 import { IoEyeSharp } from "react-icons/io5";
 import { useHistory } from "react-router-dom";
 import { useDataContext } from "../Context/dataContext";
-import guajiraMap from "../Assets/Images/Guajira.png";
-import veritasMap from "../Assets/Images/Veritas.png";
-import milagroMap from "../Assets/Images/Milagro.png";
-import galeriaMap from "../Assets/Images/Galeria.png";
-import cincoJulioMap from "../Assets/Images/CincoJulio.png";
-import bellaVistaMap from "../Assets/Images/BellaVista.png";
+import {
+  MapContainer,
+  TileLayer,
+  Polyline,
+  Popup,
+  Marker,
+} from "react-leaflet";
+import { IconLocation } from "../Components/IconLocation";
+import { IconLocation2 } from "../Components/IconLocation2";
+import { LocationTestMarker } from "../Components/LocationTestMarker";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBus } from "@fortawesome/free-solid-svg-icons";
+import { List } from '../Components/List';
+
+//Usestate
 
 function Lines() {
   const history = useHistory();
@@ -44,45 +53,338 @@ function Lines() {
   const [selectedName, setSelectedName] = useState("");
   const [com_comment, setCom_comment] = useState("");
   const [selectedLineId, setSelectedLineId] = useState(null);
-
   const [modal1, setModal1] = useState(false);
+  const [paradas, setParadas] = useState([]);
+  const [line, setLine] = useState([]);
+  const positionGuajira = [10.675, -71.629];
+  const positionVeritas = [10.650, -71.620];
+  const positionMilagro = [10.670, -71.600];
+  const positionGaleria = [10.670, -71.630];
+  const positionCincoDeJulio = [10.670, -71.630];
+  const positionBellaVista = [10.660, -71.610];
 
-  //Funcion para el chqueo u muestra de mapas en los modales
+  //Funcion para el chqueo y muestra de mapas en los modales
 
   const imgMapLine = (imgLine) => {
+
+    //Mapa de la Guajira
     if (imgLine === "Guajira") {
-      return <img src={guajiraMap} alt="guajiraMap" style={{width:'100%'}}/>;
+      const limeOptions = { color: "lime" };
+      return (
+        <div className="MapViewGuajira">
+          <MapContainer center={positionGuajira} zoom={13} style={{ width: "100%"}}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 1?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 1?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 1?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={limeOptions} positions={List.Guajira} />
+          </MapContainer>
+        </div>
+      );
     }
     if (imgLine === "Veritas") {
-      return <img src={veritasMap} alt="veritaaMap" style={{width:'100%'}} />;
+
+      //Mapa de Veritas
+      const blueOptions = { color: 'blue' }
+      return <div className="MapViewVerita">
+          <MapContainer center={positionVeritas} zoom={14} style={{ width: "100%" }}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 2?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 2?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 2?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={blueOptions} positions={List.Veritas} />
+          </MapContainer>
+        </div>
     }
     if (imgLine === "Milagro") {
-      return <img src={milagroMap} alt="milagroMap" style={{width:'90%', marginLeft:'10px'}}/>;
+
+      //Mapa de Milagro
+      const redOptions = { color: 'red' }
+      return <div className="MapViewGuajira">
+          <MapContainer center={positionMilagro} zoom={13} style={{ width: "100%"}}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 3?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 3?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 3?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={redOptions} positions={List.Milagro} />
+          </MapContainer>
+        </div>
     }
     if (imgLine === "Galeria") {
-      return <img src={galeriaMap} alt="galeriaMap" style={{width:'100%'}}/>;
+
+      //Mapa de Galeria
+      const cyanOptions = { color: "cyan" };
+      return <div className="MapViewGuajira">
+          <MapContainer center={positionGaleria} zoom={13} style={{ width: "100%"}}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 4?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 4?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 4?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={cyanOptions} positions={List.galeria} />
+          </MapContainer>
+        </div>
     }
     if (imgLine === "Cinco de Julio") {
-      return <img src={cincoJulioMap} alt="CincoJulio" style={{width:'100%'}}/>;
+
+      //Mapa de cinco de Julio
+      const greenOptions = { color: "green" };
+      return <div className="MapViewGuajira">
+          <MapContainer center={positionCincoDeJulio} zoom={13} style={{ width: "100%"}}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 8?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 8?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 8?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={greenOptions} positions={List.julio5} />
+          </MapContainer>
+        </div>
     }
     if (imgLine === "Bella Vista") {
-      return <img src={bellaVistaMap} alt="BellaVista" style={{width:'100%'}}/>;
+
+      //Mapa de bella Vista
+      const yellowOptions = { color: "yellow" };
+      return <div className="MapViewGuajira">
+          <MapContainer center={positionBellaVista} zoom={14} style={{ width: "100%"}}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 9?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 9?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 9?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={yellowOptions} positions={List.sinNombre} />
+          </MapContainer>
+        </div>
     }
   };
+
+  //Funcion para acceder a los modales
 
   const handleShow = (name) => {
     setModal1(true);
     setSelectedName(name);
   };
 
-  console.log(selectedName);
+  const toggle = () => setModal(!modal);
 
+  //Cerrar los modales
   const handleClose = () => {
     setModal1(false);
   };
 
-  const toggle = () => setModal(!modal);
-
+  //Token para el aceso
   const fetchDataUser = useCallback(async () => {
     try {
       const response = await axios.get(
@@ -94,6 +396,7 @@ function Lines() {
     }
   }, [accessToken, url]);
 
+  //Verificacion de los likes en el aparatado de las lineas
   const fetchVerifyLike = useCallback(async () => {
     try {
       const response = await axios.get(`${url}/userline`);
@@ -102,10 +405,6 @@ function Lines() {
       console.log(error);
     }
   }, [url]);
-
-  const handleVisibility = () => {
-    setVisibility(!visibility);
-  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -116,11 +415,34 @@ function Lines() {
     }
   }, [url]);
 
+  //Funcion para agarrar las paradas de la BD
+  const fetchStops = useCallback(async () => {
+    try {
+      const response = await axios.get(`${url}/Stops`);
+      setParadas(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url]);
+
+  //Funcion para agarrar las lineas de la BD
+  const fetchLine = useCallback(async () => {
+    try {
+      const response = await axios.get(`${url}/line`);
+      setLine(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url]);
+
+  //Renderizacion de las funciones
   useEffect(() => {
     fetchData();
     fetchDataUser();
     fetchVerifyLike();
-  }, [fetchData, fetchDataUser, fetchVerifyLike]);
+    fetchStops();
+    fetchLine();
+  }, [fetchData, fetchDataUser, fetchVerifyLike, fetchStops, fetchLine]);
 
   const handleSubmit = async () => {
     try {
@@ -138,13 +460,13 @@ function Lines() {
     }
   };
 
+  //Funcion para la verificacion de los likes
   const handleToggleLike = async (userId, lineId) => {
     const userLiked =
       verifyLike &&
       verifyLike.find(
         (like) => like.user.usu_id === userId && like.line.lin_id === lineId
       );
-
     try {
       if (userLiked) {
         await axios.delete(`${url}/userline/deletebyids/${userId}/${lineId}`);
@@ -162,6 +484,12 @@ function Lines() {
       });
     }
   };
+  
+    //Visibilidad del mapa
+  const handleVisibility = () => {
+    setVisibility(!visibility);
+  };
+  
 
   // function handleLike(lineId) {
   //   console.log(lineId)
@@ -231,11 +559,16 @@ function Lines() {
                   {line.lin_name}
                 </CardTitle>
 
-                <Modal isOpen={modal1} className="mt-5" centered toggle={handleClose} >
+                <Modal
+                  isOpen={modal1}
+                  className="mt-5"
+                  centered
+                  toggle={handleClose}
+                >
                   <ModalHeader toggle={handleClose}>
                     Visualización {selectedName}
                   </ModalHeader>
-                  <ModalBody style={{margin: '0 auto', width: '80%'}}>
+                  <ModalBody style={{ margin: "0 auto", width: "80%" }}>
                     {imgMapLine(selectedName)}
                   </ModalBody>
                 </Modal>

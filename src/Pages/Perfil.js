@@ -16,9 +16,26 @@ import {
   ModalFooter,
   Input,
 } from "reactstrap";
-import { FaRegHeart, FaHeart, FaRegCommentDots } from "react-icons/fa";
 import { useDataContext } from "../Context/dataContext";
 import { ReactComponent as IconBus } from "../Assets/Images/bus.svg";
+import {
+  FaRegHeart,
+  FaHeart,
+  FaRegCommentDots,
+} from "react-icons/fa";
+import {
+  MapContainer,
+  TileLayer,
+  Polyline,
+  Popup,
+  Marker,
+} from "react-leaflet";
+import { IconLocation } from "../Components/IconLocation";
+import { IconLocation2 } from "../Components/IconLocation2";
+import { LocationTestMarker } from "../Components/LocationTestMarker";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBus } from "@fortawesome/free-solid-svg-icons";
+import { List } from '../Components/List';
 
 function NonStrictModal(props) {
   return <Modal {...props}>{props.children}</Modal>;
@@ -32,12 +49,330 @@ function Perfil() {
   const toggle = () => setModal(!modal);
   const test = () => setModal1(!modal1);
   const [selectedName, setSelectedName] = useState("");
-  const [lineList, setListLine] = useState([]);
+  const [testF, setTestF] = useState([]);
+  const [bus, setBus] = useState([]);
   const [user, setUser] = useState([]);
   const [com_idUser, setCom_idUser] = useState("");
   const [com_idLine, setCom_idLine] = useState("");
   const [com_comment, setCom_comment] = useState("");
   const { url, accessToken } = useDataContext();
+  const [modal2, setModal2] = useState(false);
+  const [selectedNameMap, setSelectedNameMap] = useState("");
+
+  const [line, setLine] = useState([]);
+  const [paradas, setParadas] = useState([]);
+  const positionGuajira = [10.675, -71.629];
+  const positionVeritas = [10.650, -71.620];
+  const positionMilagro = [10.670, -71.600];
+  const positionGaleria = [10.670, -71.630];
+  const positionCincoDeJulio = [10.670, -71.630];
+  const positionBellaVista = [10.660, -71.610];
+  
+
+  const imgMapLine = (imgLine) => {
+
+    //Mapa de la Guajira
+    if (imgLine === "Guajira") {
+      const limeOptions = { color: "lime" };
+      return (
+        <div className="MapViewGuajira">
+          <MapContainer center={positionGuajira} zoom={13} style={{ width: "100%"}}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 1?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 1?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 1?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={limeOptions} positions={List.Guajira} />
+          </MapContainer>
+        </div>
+      );
+    }
+    if (imgLine === "Veritas") {
+
+      //Mapa de Veritas
+      const blueOptions = { color: 'blue' }
+      return <div className="MapViewVerita">
+          <MapContainer center={positionVeritas} zoom={14} style={{ width: "100%" }}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 2?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 2?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 2?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={blueOptions} positions={List.Veritas} />
+          </MapContainer>
+        </div>
+    }
+    if (imgLine === "Milagro") {
+
+      //Mapa de Milagro
+      const redOptions = { color: 'red' }
+      return <div className="MapViewGuajira">
+          <MapContainer center={positionMilagro} zoom={13} style={{ width: "100%"}}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 3?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 3?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 3?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={redOptions} positions={List.Milagro} />
+          </MapContainer>
+        </div>
+    }
+    if (imgLine === "Galeria") {
+
+      //Mapa de Galeria
+      const cyanOptions = { color: "cyan" };
+      return <div className="MapViewGuajira">
+          <MapContainer center={positionGaleria} zoom={13} style={{ width: "100%"}}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 4?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 4?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 4?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={cyanOptions} positions={List.galeria} />
+          </MapContainer>
+        </div>
+    }
+    if (imgLine === "Cinco de Julio") {
+
+      //Mapa de cinco de Julio
+      const greenOptions = { color: "green" };
+      return <div className="MapViewGuajira">
+          <MapContainer center={positionCincoDeJulio} zoom={13} style={{ width: "100%"}}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 8?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 8?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 8?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={greenOptions} positions={List.julio5} />
+          </MapContainer>
+        </div>
+    }
+    if (imgLine === "Bella Vista") {
+
+      //Mapa de bella Vista
+      const yellowOptions = { color: "yellow" };
+      return <div className="MapViewGuajira">
+          <MapContainer center={positionBellaVista} zoom={14} style={{ width: "100%"}}>
+            {paradas.map((parada) => (
+              parada.Line.lin_id === 9?
+              <Marker
+                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                icon={IconLocation}
+              >
+                <Popup>{parada.par_name}</Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 9?
+              <Marker
+                position={[linea.lin_start, linea.lin_close]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+            {line.map((linea) => (
+              linea.lin_id === 9?
+              <Marker
+                position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                icon={IconLocation2}
+              >
+                <Popup>
+                  {linea.lin_name}
+                  <FontAwesomeIcon icon={faBus} />
+                </Popup>
+              </Marker>:null
+            ))}
+
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={yellowOptions} positions={List.sinNombre} />
+          </MapContainer>
+        </div>
+    }
+  };
 
   const handleShow = (name) => {
     setShow(true);
@@ -46,12 +381,27 @@ function Perfil() {
 
   const handleClose = () => {
     setShow(false);
+    setModal2(false)
   };
 
-  const fetchListData = useCallback(async () => {
+  const modalMap = (lin) => {
+    setModal2(true);
+    setSelectedNameMap(lin);
+  };
+
+  const fetchTest = useCallback(async () => {
     try {
-      const response = await axios.get(`${url}/Line`);
-      setListLine(response.data);
+      const response = await axios.get(`${url}/userline`);
+      setTestF(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url]);
+
+  const fetchBus = useCallback(async () => {
+    try {
+      const response = await axios.get(`${url}/bus`);
+      setBus(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -68,10 +418,31 @@ function Perfil() {
     }
   }, [setUser, accessToken, url]);
 
+  const fetchStops = useCallback(async () => {
+    try {
+      const response = await axios.get(`${url}/Stops`);
+      setParadas(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url]);
+
+  const fetchLine = useCallback(async () => {
+    try {
+      const response = await axios.get(`${url}/line`);
+      setLine(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url]);
+
   useEffect(() => {
-    fetchListData();
     fetchDataUser();
-  }, [fetchListData, fetchDataUser]);
+    fetchTest();
+    fetchBus();
+    fetchStops();
+    fetchLine()
+  }, [fetchDataUser, fetchTest, fetchBus, fetchStops, fetchLine]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -102,40 +473,60 @@ function Perfil() {
       </div>
       <div className="containerNombre">
         <h2 className="nombreCuenta">
-          { user.usu_name? user.usu_name : '' } {user.usu_lastName? user.usu_lastName : ''}
+          {user.usu_name ? user.usu_name : ""}{" "}
+          {user.usu_lastName ? user.usu_lastName : ""}
           <div className="rayaTituloP" />
         </h2>
         <p className="CorreoElectronico">
-          {user.usu_email ? user.usu_email: ''}
+          {user.usu_email ? user.usu_email : ""}
         </p>
       </div>
-      <Button className="btnTest" onClick={test}>
-        <IconBus className="iconBusTest" />
-        <div className="Modal-comment">
-          <Modal isOpen={modal1} centered toggle={test}>
-            <ModalHeader toggle={test}>Rutas</ModalHeader>
-            <ModalBody>
-              <Input
-                type="textarea"
-                name="text"
-                id="exampleText"
-                value={com_comment}
-                onChange={(e) => setCom_comment(e.target.value)}
-                placeholder="Realiza algún comentario que desees agregar acerca de esta ruta"
-                rows={5}
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button color="primary" onClick={handleSubmit}>
-                Enviar Comentario
-              </Button>{" "}
-              <Button color="secondary" onClick={test}>
-                Cancelar
-              </Button>
-            </ModalFooter>
-          </Modal>
-        </div>
-      </Button>
+
+      {user.usu_role === "Driver" ? (
+        <Button className="btnTest" onClick={test}>
+          <IconBus className="iconBusTest" />
+          <div className="Modal-comment">
+            <Modal isOpen={modal1} centered toggle={test}>
+              <ModalHeader toggle={test}>Ruta/s</ModalHeader>
+              <ModalBody>
+                Numero de placa: {bus.map((buses) =>
+                user.usu_id === buses.user.usu_id ?
+                buses.bus_plate
+                :null
+                )}<br/><br/><br/>
+                Lineas: {bus.map((buses) =>
+                user.usu_id === buses.user.usu_id ?
+                buses.Line.lin_name
+                :null
+                )} <Button color="success" onClick={() => bus.map((buses) =>
+                user.usu_id === buses.user.usu_id ?
+                modalMap(buses.Line.lin_name)
+                :null
+                )}>Ver linea</Button>
+                <Modal
+                  isOpen={modal2}
+                  className="mt-5"
+                  centered
+                  toggle={handleClose}
+                >
+                  <ModalHeader toggle={handleClose}>
+                    Visualización {selectedNameMap}
+                  </ModalHeader>
+                  <ModalBody style={{ margin: "0 auto", width: "80%" }}>
+                    {imgMapLine(selectedNameMap)}
+                  </ModalBody>
+                </Modal>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="secondary" onClick={test}>
+                  Salir
+                </Button>
+              </ModalFooter>
+            </Modal>
+          </div>
+        </Button>
+      ) : null}
+
       <div className="containerBody">
         <h3 className="titleRutasF">
           Rutas Favoritas
@@ -144,79 +535,81 @@ function Perfil() {
 
         <Container fluid className="contentP">
           <Row>
-            {lineList.map((line) => (
-              <Col className="col" key={line.lin_id}>
-                <Card className="cardLine">
-                  <CardHeader className="card-head">
-                    id {line.lin_id}
-                  </CardHeader>
-                  <CardBody className="card-body">
-                    <CardTitle
-                      className="card-tittle"
-                      onClick={() => handleShow(line.lin_name)}
-                    >
-                      {line.lin_name}
-                    </CardTitle>
+            {testF.map((prueba, index) =>
+              prueba.user.usu_id === user.usu_id ? (
+                <Col className="col">
+                  <Card className="cardLine">
+                    <CardHeader className="card-head"># {index}</CardHeader>
+                    <CardBody className="card-body">
+                      <CardTitle
+                        className="card-tittle"
+                        onClick={() => handleShow()}
+                      >
+                        {prueba.line.lin_name}
+                      </CardTitle>
 
-                    <NonStrictModal
-                      className="mt-5"
-                      isOpen={show}
-                      size="xl"
-                      centered
-                      toggle={handleClose}
-                    >
-                      <ModalHeader toggle={handleClose}>
-                        Visualización {selectedName}
-                      </ModalHeader>
-                      <ModalBody>Contenido del modal</ModalBody>
-                    </NonStrictModal>
+                      <NonStrictModal
+                        className="mt-5"
+                        isOpen={show}
+                        size="xl"
+                        centered
+                        toggle={handleClose}
+                      >
+                        <ModalHeader toggle={handleClose}>
+                          Visualización {selectedName}
+                        </ModalHeader>
+                        <ModalBody>Contenido del modal</ModalBody>
+                      </NonStrictModal>
 
-                    <div className="lineButtons">
-                      <Button className="btn" type="button">
-                        {like ? (
-                          <FaHeart className="icon" onClick={handleLike} />
-                        ) : (
-                          <FaRegHeart className="icon" onClick={handleLike} />
-                        )}
-                      </Button>
-                      <Button className="btn" type="button" onClick={toggle}>
-                        <FaRegCommentDots className="icon" />
-                      </Button>
-                      <div className="Modal-comment">
-                        <Modal isOpen={modal} centered toggle={toggle}>
-                          <ModalHeader toggle={toggle}>
-                            Comenta la Ruta
-                          </ModalHeader>
-                          <ModalBody>
-                            <Input
-                              type="textarea"
-                              name="text"
-                              id="exampleText"
-                              value={com_comment}
-                              onChange={(e) => setCom_comment(e.target.value)}
-                              placeholder="Realiza algún comentario que desees agregar acerca de esta ruta"
-                              rows={5}
-                            />
-                          </ModalBody>
-                          <ModalFooter>
-                            <Button color="primary" onClick={handleSubmit}>
-                              Enviar Comentario
-                            </Button>{" "}
-                            <Button color="secondary" onClick={toggle}>
-                              Cancelar
-                            </Button>
-                          </ModalFooter>
-                        </Modal>
+                      <div className="lineButtons">
+                        <Button className="btn" type="button">
+                          {like ? (
+                            <FaHeart className="icon" onClick={handleLike} />
+                          ) : (
+                            <FaRegHeart className="icon" onClick={handleLike} />
+                          )}
+                        </Button>
+                        <Button className="btn" type="button" onClick={toggle}>
+                          <FaRegCommentDots className="icon" />
+                        </Button>
+                        <div className="Modal-comment">
+                          <Modal isOpen={modal} centered toggle={toggle}>
+                            <ModalHeader toggle={toggle}>
+                              Comenta la Ruta
+                            </ModalHeader>
+                            <ModalBody>
+                              <Input
+                                type="textarea"
+                                name="text"
+                                id="exampleText"
+                                value={com_comment}
+                                onChange={(e) => setCom_comment(e.target.value)}
+                                placeholder="Realiza algún comentario que desees agregar acerca de esta ruta"
+                                rows={5}
+                              />
+                            </ModalBody>
+                            <ModalFooter>
+                              <Button color="primary" onClick={handleSubmit}>
+                                Enviar Comentario
+                              </Button>{" "}
+                              <Button color="secondary" onClick={toggle}>
+                                Cancelar
+                              </Button>
+                            </ModalFooter>
+                          </Modal>
+                        </div>
                       </div>
-                    </div>
-                  </CardBody>
-                  <CardFooter className="card-footer">
-                    <div className="Horario">Horario: 7am - 8pm</div>
-                    <div className="Pasaje">Pasaje: {line.lin_price}Bs.</div>
-                  </CardFooter>
-                </Card>
-              </Col>
-            ))}
+                    </CardBody>
+                    <CardFooter className="card-footer">
+                      <div className="Horario">Horario: 7am - 8pm</div>
+                      <div className="Pasaje">
+                        Pasaje: {prueba.line.lin_price}Bs.
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </Col>
+              ) : null
+            )}
           </Row>
         </Container>
       </div>

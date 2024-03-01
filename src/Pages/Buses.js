@@ -155,7 +155,7 @@ function Buses() {
               <tr>
                 <th>#</th>
                 <th>Placa</th>
-                <th>Status</th>
+                <th>Estado</th>
                 <th>Linea de Bus</th>
                 <th>Conductor</th>
                 <th>Funciones</th>

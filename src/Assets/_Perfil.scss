@@ -103,24 +103,6 @@
   justify-content: center;
 }
 
-.btnTest:hover {
-  background-color: #0a4333;
-}
-
-.btnTest:focus {
-  background-color: #0a4333;
-}
-
-@media screen and (max-width: 800px) {
-  .iconBusTest {
-    position: relative;
-    width: 5vw;
-  }
-  .btnTest {
-    height: 8vw;
-  }
-}
-
 @media screen and (max-width: 800px) {
   .btnTest {
     position: static;

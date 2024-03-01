@@ -137,7 +137,7 @@ function LinesEdit() {
             <Table bordered responsive className='userTable'>
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>#</th>
                   <th>Nombre</th>
                   <th>Latitud (Inicio)</th>
                   <th>Longitud (Inicio)</th>
@@ -148,9 +148,9 @@ function LinesEdit() {
                 </tr>
               </thead>
               <tbody>
-                {filteredStops.map(line => (
+                {filteredStops.map((line, index) => (
                   <tr key={line.lin_id}>
-                    <td>{line.lin_id}</td>
+                    <td>{index+1}</td>
                     <td>{line.lin_name}</td>
                     <td>{line.lin_start}</td>
                     <td>{line.lin_close}</td>
