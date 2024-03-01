@@ -18,11 +18,7 @@ import {
 } from "reactstrap";
 import { useDataContext } from "../Context/dataContext";
 import { ReactComponent as IconBus } from "../Assets/Images/bus.svg";
-import {
-  FaRegHeart,
-  FaHeart,
-  FaRegCommentDots,
-} from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaRegCommentDots } from "react-icons/fa";
 import {
   MapContainer,
   TileLayer,
@@ -35,7 +31,7 @@ import { IconLocation2 } from "../Components/IconLocation2";
 import { LocationTestMarker } from "../Components/LocationTestMarker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBus } from "@fortawesome/free-solid-svg-icons";
-import { List } from '../Components/List';
+import { List } from "../Components/List";
 
 function NonStrictModal(props) {
   return <Modal {...props}>{props.children}</Modal>;
@@ -62,54 +58,63 @@ function Perfil() {
   const [line, setLine] = useState([]);
   const [paradas, setParadas] = useState([]);
   const positionGuajira = [10.675, -71.629];
-  const positionVeritas = [10.650, -71.620];
-  const positionMilagro = [10.670, -71.600];
-  const positionGaleria = [10.670, -71.630];
-  const positionCincoDeJulio = [10.670, -71.630];
-  const positionBellaVista = [10.660, -71.610];
-  
+  const positionVeritas = [10.65, -71.62];
+  const positionMilagro = [10.67, -71.6];
+  const positionGaleria = [10.67, -71.63];
+  const positionCincoDeJulio = [10.67, -71.63];
+  const positionBellaVista = [10.66, -71.61];
 
   const imgMapLine = (imgLine) => {
-
     //Mapa de la Guajira
     if (imgLine === "Guajira") {
       const limeOptions = { color: "lime" };
       return (
         <div className="MapViewGuajira">
-          <MapContainer center={positionGuajira} zoom={13} style={{ width: "100%"}}>
-            {paradas.map((parada) => (
-              parada.Line.lin_id === 1?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 1?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 1?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
+          <MapContainer
+            center={positionGuajira}
+            zoom={13}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 1 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 1 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 1 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -123,44 +128,55 @@ function Perfil() {
       );
     }
     if (imgLine === "Veritas") {
-
       //Mapa de Veritas
-      const blueOptions = { color: 'blue' }
-      return <div className="MapViewVerita">
-          <MapContainer center={positionVeritas} zoom={14} style={{ width: "100%" }}>
-            {paradas.map((parada) => (
-              parada.Line.lin_id === 2?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 2?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 2?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
+      const blueOptions = { color: "blue" };
+      return (
+        <div className="MapViewVerita">
+          <MapContainer
+            center={positionVeritas}
+            zoom={14}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 2 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 2 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 2 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -171,46 +187,58 @@ function Perfil() {
             <Polyline pathOptions={blueOptions} positions={List.Veritas} />
           </MapContainer>
         </div>
+      );
     }
     if (imgLine === "Milagro") {
-
       //Mapa de Milagro
-      const redOptions = { color: 'red' }
-      return <div className="MapViewGuajira">
-          <MapContainer center={positionMilagro} zoom={13} style={{ width: "100%"}}>
-            {paradas.map((parada) => (
-              parada.Line.lin_id === 3?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 3?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 3?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
+      const redOptions = { color: "red" };
+      return (
+        <div className="MapViewGuajira">
+          <MapContainer
+            center={positionMilagro}
+            zoom={13}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 3 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 3 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 3 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -221,46 +249,58 @@ function Perfil() {
             <Polyline pathOptions={redOptions} positions={List.Milagro} />
           </MapContainer>
         </div>
+      );
     }
     if (imgLine === "Galeria") {
-
       //Mapa de Galeria
       const cyanOptions = { color: "cyan" };
-      return <div className="MapViewGuajira">
-          <MapContainer center={positionGaleria} zoom={13} style={{ width: "100%"}}>
-            {paradas.map((parada) => (
-              parada.Line.lin_id === 4?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 4?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 4?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
+      return (
+        <div className="MapViewGuajira">
+          <MapContainer
+            center={positionGaleria}
+            zoom={13}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 4 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 4 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 4 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -271,46 +311,58 @@ function Perfil() {
             <Polyline pathOptions={cyanOptions} positions={List.galeria} />
           </MapContainer>
         </div>
+      );
     }
     if (imgLine === "Cinco de Julio") {
-
       //Mapa de cinco de Julio
       const greenOptions = { color: "green" };
-      return <div className="MapViewGuajira">
-          <MapContainer center={positionCincoDeJulio} zoom={13} style={{ width: "100%"}}>
-            {paradas.map((parada) => (
-              parada.Line.lin_id === 8?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 8?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 8?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
+      return (
+        <div className="MapViewGuajira">
+          <MapContainer
+            center={positionCincoDeJulio}
+            zoom={13}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 8 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 8 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 8 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -321,46 +373,58 @@ function Perfil() {
             <Polyline pathOptions={greenOptions} positions={List.julio5} />
           </MapContainer>
         </div>
+      );
     }
     if (imgLine === "Bella Vista") {
-
       //Mapa de bella Vista
       const yellowOptions = { color: "yellow" };
-      return <div className="MapViewGuajira">
-          <MapContainer center={positionBellaVista} zoom={14} style={{ width: "100%"}}>
-            {paradas.map((parada) => (
-              parada.Line.lin_id === 9?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 9?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 9?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker>:null
-            ))}
+      return (
+        <div className="MapViewGuajira">
+          <MapContainer
+            center={positionBellaVista}
+            zoom={14}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 9 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 9 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 9 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -371,6 +435,7 @@ function Perfil() {
             <Polyline pathOptions={yellowOptions} positions={List.sinNombre} />
           </MapContainer>
         </div>
+      );
     }
   };
 
@@ -381,7 +446,23 @@ function Perfil() {
 
   const handleClose = () => {
     setShow(false);
-    setModal2(false)
+    setModal2(false);
+  };
+
+  const handleActive = (buses) => {
+    try {
+      if (buses.bus_status === "active") {
+        axios.put(`${url}/bus/${buses.bus_id}`, {
+          bus_status: "desactive",
+        });
+        fetchBus();
+      }else{
+        axios.put(`${url}/bus/${buses.bus_id}`, {
+          bus_status: "active",
+        });
+        fetchBus();
+      }
+    } catch (error) {}
   };
 
   const modalMap = (lin) => {
@@ -441,7 +522,7 @@ function Perfil() {
     fetchTest();
     fetchBus();
     fetchStops();
-    fetchLine()
+    fetchLine();
   }, [fetchDataUser, fetchTest, fetchBus, fetchStops, fetchLine]);
 
   const handleSubmit = async (event) => {
@@ -489,20 +570,36 @@ function Perfil() {
             <Modal isOpen={modal1} centered toggle={test}>
               <ModalHeader toggle={test}>Ruta/s</ModalHeader>
               <ModalBody>
-                Numero de placa: {bus.map((buses) =>
-                user.usu_id === buses.user.usu_id ?
-                buses.bus_plate
-                :null
-                )}<br/><br/><br/>
-                Lineas: {bus.map((buses) =>
-                user.usu_id === buses.user.usu_id ?
-                buses.Line.lin_name
-                :null
-                )} <Button color="success" onClick={() => bus.map((buses) =>
-                user.usu_id === buses.user.usu_id ?
-                modalMap(buses.Line.lin_name)
-                :null
-                )}>Ver linea</Button>
+                Numero de placa:{" "}
+                {bus.map((buses) =>
+                  user.usu_id === buses.user.usu_id ? buses.bus_plate : null
+                )}
+                <br />
+                <br />
+                Lineas:{" "}
+                {bus.map((buses) =>
+                  user.usu_id === buses.user.usu_id ? buses.Line.lin_name : null
+                )}{" "}
+                <Button
+                  color="primary"
+                  onClick={() =>
+                    bus.map((buses) =>
+                      user.usu_id === buses.user.usu_id
+                        ? modalMap(buses.Line.lin_name)
+                        : null
+                    )
+                  }
+                >
+                  Ver linea
+                </Button>
+                <br />
+                <br />
+                Estado:
+                {bus.map((buses) =>
+                  user.usu_id === buses.user.usu_id ? (
+                    <Button onClick={() => handleActive(buses)} color={buses.bus_status==='active'?'success': 'danger'}>{buses.bus_status==='active'?'Activo': 'Inactivo'}</Button>
+                  ) : null
+                )}
                 <Modal
                   isOpen={modal2}
                   className="mt-5"

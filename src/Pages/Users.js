@@ -222,8 +222,8 @@ function Users() {
               <Label>
                 <Input
                   type="radio"
-                  value="User"
-                  checked={usu_role === 'User'}
+                  value="user"
+                  checked={usu_role === 'user'}
                   onChange={e => setRole(e.target.value)}
                 />
                 User

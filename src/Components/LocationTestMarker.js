@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Marker, Popup, useMapEvents } from 'react-leaflet'
-import { IconLocation3 } from "../Components/IconLocationHere";
+import { IconLocationBus } from "../Components/IconLocationBus";
 import { useDataContext } from '../Context/dataContext';
 import axios from 'axios';
 
@@ -68,7 +68,7 @@ function LocationTestMarker() {
     busData
       .filter(bus => bus.bus_status === 'active')
       .map((bus) => (
-        <Marker key={bus.bus_id} position={{ lat: bus.bus_lat, lng: bus.bus_lon }} icon={IconLocation3}>
+        <Marker key={bus.bus_id} position={{ lat: bus.bus_lat, lng: bus.bus_lon }} icon={IconLocationBus}>
           <Popup>Bus here</Popup>
         </Marker>
       ))

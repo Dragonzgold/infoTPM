@@ -24,7 +24,7 @@ export function useLocalStorage(key, initialValue) {
 
 // Función para limpiar el Local Storage de los elementos deseados
 export const clearLocalStorage = () => {
-  const keysToPreserve = ['likes'];
+  const keysToPreserve = ['lines'];
   for (let i = 0; i < window.localStorage.length; i++) {
     const key = window.localStorage.key(i);
     if (!keysToPreserve.includes(key)) {

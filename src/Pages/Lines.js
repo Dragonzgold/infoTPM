@@ -456,7 +456,9 @@ function Lines() {
       setSelectedLineId(null); // reset the selected line ID
       toggle();
     } catch (error) {
-      console.log(error);
+      history.push({
+        pathname: "/Account",
+      });
     }
   };
 
