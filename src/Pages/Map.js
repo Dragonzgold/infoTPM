@@ -8,7 +8,7 @@ import {
 } from "react-leaflet";
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css'
-// import { LocationMarker } from '../Components/LocationMarker'
+import { LocationMarker } from '../Components/LocationMarker'
 import { LocationTestMarker } from '../Components/LocationTestMarker'
 import { IconLocation } from "../Components/IconLocation";
 import { IconLocation2 } from "../Components/IconLocation2";
@@ -22,6 +22,7 @@ function MapView() {
   const position = [10.693, -71.634]
   const [paradas, setParadas] = useState([]);
   const [line, setLine] = useState([]);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const fetchData = useCallback(async () => {
     try {
@@ -46,6 +47,15 @@ function MapView() {
     fetchData();
     fetchLineData();
   }, [fetchData, fetchLineData]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setRefreshKey(prevKey => prevKey + 1);
+    }, 15000); // 15000 ms = 15 s
+
+    // Limpiar el intervalo cuando el componente se desmonte
+    return () => clearInterval(intervalId);
+  }, []);
 
   const limeOptions = { color: 'lime' }
   const blueOptions = { color: 'blue' }
@@ -85,8 +95,8 @@ function MapView() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {/* <LocationMarker /> */}
-        <LocationTestMarker/>
+        <LocationMarker />
+        <LocationTestMarker key={refreshKey} />
         <Polyline pathOptions={limeOptions} positions={List.Guajira} />
         <Polyline pathOptions={blueOptions} positions={List.Veritas} />
         <Polyline pathOptions={redOptions} positions={List.Milagro} />

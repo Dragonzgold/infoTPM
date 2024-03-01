@@ -88,7 +88,7 @@ function NavBar(props) {
         <Collapse isOpen={!collapsed} navbar className="desplegable">
           <Nav navbar>
             {logged ?
-            user.usu_role === 'user' || user.usu_role === 'driver' ? (
+            user.usu_role === 'user' || user.usu_role === 'Driver' ? (
               <ul className='buttons'>
                 <li key='Perfil'>
                   <Link className='btn' to='/Perfil'>Perfil</Link>
