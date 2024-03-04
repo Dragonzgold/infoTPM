@@ -226,7 +226,7 @@ function Users() {
                   checked={usu_role === 'user'}
                   onChange={e => setRole(e.target.value)}
                 />
-                User
+                User.
               </Label>
               &nbsp;
               <br />
