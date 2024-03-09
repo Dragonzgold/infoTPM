@@ -7,6 +7,20 @@
   height: 100%;
   margin-top: 5rem;
 
+  .searchLine{
+    position: relative;
+    margin: 5vw;
+    width: 56vw;
+    background-color: #0a4333;
+    border-radius: 30%;
+    padding-top: 5vw;
+    padding-bottom: 5vw;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 5px rgba(255, 255, 255, 0.5);
+    .form-control{
+      width: 50vw;
+    }
+  }
+
   .col {
     margin-bottom: 2rem;
 
@@ -38,11 +52,16 @@
 
         .card-tittle {
           font-family: "Segoe UI";
-          padding: 0 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
           color: #ffffff;
-          font-size: 1.5rem;
+          font-size: 2rem;
           font-weight: 400;
           text-align: start;
+          .iconMap{
+            width: 10vw;
+          }
         }
 
         .modalLine {

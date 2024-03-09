@@ -7,13 +7,13 @@ export function DataContextProvider(props) {
     const [accessAdminToken, setAccessAdminToken] = useLocalStorage("130314042807", '');
     const [accessToken, setAccessToken] = useLocalStorage("token", '');
     const [logged, setLogged] = useLocalStorage('logged', false);
-    const [line, setLine] = useLocalStorage('lines', []);
+    const [lines, setLines] = useLocalStorage('lines', []);
     const url = 'https://infotpm-backend-production.up.railway.app';
     const value = {
         logged, setLogged,
         accessAdminToken, setAccessAdminToken,
         accessToken, setAccessToken,
-        line, setLine,
+        lines, setLines,
         url
     };
 

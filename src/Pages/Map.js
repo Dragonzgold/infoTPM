@@ -18,7 +18,7 @@ import { List } from '../Components/List';
 import { useDataContext } from '../Context/dataContext';
 
 function MapView() {
-  const { url } = useDataContext();
+  const { url, setLines, lines } = useDataContext();
   const position = [10.693, -71.634]
   const [paradas, setParadas] = useState([]);
   const [line, setLine] = useState([]);
@@ -31,7 +31,7 @@ function MapView() {
     } catch (error) {
       console.log(error);
     }
-  },[url]);
+  }, [url]);
 
   const fetchLineData = useCallback(async () => {
     try {
@@ -43,52 +43,67 @@ function MapView() {
     }
   }, [url]);
 
+  const fetchDataList = useCallback(
+    async () => {
+      try {
+        let data = JSON.parse(localStorage.getItem('lines'));
+        if (!data) {
+          setLines(List);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }, []);
+
   useEffect(() => {
     fetchData();
     fetchLineData();
-  }, [fetchData, fetchLineData]);
+    fetchDataList();
+  }, [fetchData, fetchLineData, fetchDataList]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setRefreshKey(prevKey => prevKey + 1);
-    }, 5000); // 5000 ms = 5 s
+    }, 15000); // 5000 ms = 5 s
 
     // Limpiar el intervalo cuando el componente se desmonte
     return () => clearInterval(intervalId);
   }, []);
 
-  const limeOptions = { color: 'lime' }
-  const blueOptions = { color: 'blue' }
-  const redOptions = { color: 'red' }
-  const cyanOptions = { color: "cyan" };
-  const greenOptions = { color: "green" };
-  const yellowOptions = { color: "yellow" };
-
   return (
     <div className='MapView'>
       <MapContainer center={position} zoom={14} >
         {paradas.map((parada) => (
-          <Marker position={[parada.par_lat, parada.par_long]} icon={IconLocation}>
-            <Popup>
-              {parada.par_name}
-            </Popup>
-          </Marker>
+          lines.filter(line => line.hidden === false).map((line) => (
+            parada.Line.lin_name === line.nombre &&
+            <Marker position={[parada.par_lat, parada.par_long]} icon={IconLocation}>
+              <Popup>
+                {parada.par_name}
+              </Popup>
+            </Marker>
+          ))
         ))}
         {line.map((linea) => (
-          <Marker position={[linea.lin_start, linea.lin_close]} icon={IconLocation2}>
-            <Popup>
-              {linea.lin_name}
-              <FontAwesomeIcon icon={faBus} />
-            </Popup>
-          </Marker>
+          lines.filter(line => line.hidden === false).map((line) => (
+            linea.lin_name === line.nombre &&
+            <Marker position={[linea.lin_start, linea.lin_close]} icon={IconLocation2}>
+              <Popup>
+                {linea.lin_name}
+                <FontAwesomeIcon icon={faBus} />
+              </Popup>
+            </Marker>
+          ))
         ))}
         {line.map((linea) => (
-          <Marker position={[linea.lin_exit_point, linea.lin_arrival_point]} icon={IconLocation2}>
-            <Popup>
-              {linea.lin_name}
-              <FontAwesomeIcon icon={faBus} />
-            </Popup>
-          </Marker>
+          lines.filter(line => line.hidden === false).map((line) => (
+            linea.lin_name === line.nombre &&
+            <Marker position={[linea.lin_exit_point, linea.lin_arrival_point]} icon={IconLocation2}>
+              <Popup>
+                {linea.lin_name}
+                <FontAwesomeIcon icon={faBus} />
+              </Popup>
+            </Marker>
+          ))
         ))}
 
         <TileLayer
@@ -97,12 +112,9 @@ function MapView() {
         />
         <LocationMarker />
         <LocationTestMarker key={refreshKey} />
-        <Polyline pathOptions={limeOptions} positions={List.Guajira} />
-        <Polyline pathOptions={blueOptions} positions={List.Veritas} />
-        <Polyline pathOptions={redOptions} positions={List.Milagro} />
-        <Polyline pathOptions={cyanOptions} positions={List.galeria} />
-        <Polyline pathOptions={greenOptions} positions={List.julio5} />
-        <Polyline pathOptions={yellowOptions} positions={List.sinNombre} />
+        {lines.filter(line => line.hidden === false).map((line) => (
+          <Polyline key={refreshKey} pathOptions={{ color: line.color }} positions={line.coords} />
+        ))}
       </MapContainer>
     </div>
   )
