@@ -53,7 +53,7 @@ function MapView() {
       } catch (error) {
         console.log(error);
       }
-    }, []);
+    }, [setLines]);
 
   useEffect(() => {
     fetchData();

@@ -15,6 +15,8 @@ import {
   ModalBody,
   ModalFooter,
   Input,
+  NavbarToggler,
+  Collapse,
 } from "reactstrap";
 import {
   FaRegHeart,
@@ -37,8 +39,8 @@ import { IconLocation2 } from "../Components/IconLocation2";
 import { LocationTestMarker } from "../Components/LocationTestMarker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBus } from "@fortawesome/free-solid-svg-icons";
-import { List } from '../Components/List';
-import { ReactComponent as IconMaker } from '../Assets/Images/mapPrueba.svg';
+import { List } from "../Components/List";
+import { ReactComponent as IconMaker } from "../Assets/Images/mapPrueba.svg";
 
 //Usestate
 
@@ -58,34 +60,46 @@ function Lines() {
   const [paradas, setParadas] = useState([]);
   const [line, setLine] = useState([]);
   const positionGuajira = [10.675, -71.629];
-  const positionVeritas = [10.650, -71.620];
-  const positionMilagro = [10.670, -71.600];
-  const positionGaleria = [10.670, -71.630];
-  const positionCincoDeJulio = [10.670, -71.630];
-  const positionBellaVista = [10.660, -71.610];
+  const positionVeritas = [10.65, -71.62];
+  const positionMilagro = [10.67, -71.6];
+  const positionGaleria = [10.67, -71.63];
+  const positionCincoDeJulio = [10.67, -71.63];
+  const positionBellaVista = [10.66, -71.61];
+  const [selectId, setSelectId] = useState(null);
+  const [collapsed, setCollapsed] = React.useState(true);
 
   //Funcion para el chqueo y muestra de mapas en los modales
 
   const mapLine = (imgLine) => {
-
     //Mapa de la Guajira
     if (imgLine === "Guajira") {
       const limeOptions = { color: "lime" };
-      const coordsGuajira = List.find(elemento => elemento.nombre === "Guajira")?.coords;
+      const coordsGuajira = List.find(
+        (elemento) => elemento.nombre === "Guajira"
+      )?.coords;
       return (
         <div className="MapViewGuajira">
-          <MapContainer center={positionGuajira} zoom={13} style={{ width: "100%" }}>
-            {paradas.map((parada) => (
-              parada.Line.lin_id === 1 ?
+          <MapContainer
+            center={positionGuajira}
+            zoom={13}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 1 ? (
                 <Marker
-                  position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
                   icon={IconLocation}
                 >
                   <Popup>{parada.par_name}</Popup>
-                </Marker> : null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 1 ?
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 1 ? (
                 <Marker
                   position={[linea.lin_start, linea.lin_close]}
                   icon={IconLocation2}
@@ -94,10 +108,11 @@ function Lines() {
                     {linea.lin_name}
                     <FontAwesomeIcon icon={faBus} />
                   </Popup>
-                </Marker> : null
-            ))}
-            {line.map((linea) => (
-              linea.lin_id === 1 ?
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 1 ? (
                 <Marker
                   position={[linea.lin_exit_point, linea.lin_arrival_point]}
                   icon={IconLocation2}
@@ -106,8 +121,9 @@ function Lines() {
                     {linea.lin_name}
                     <FontAwesomeIcon icon={faBus} />
                   </Popup>
-                </Marker> : null
-            ))}
+                </Marker>
+              ) : null
+            )}
 
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -121,259 +137,332 @@ function Lines() {
       );
     }
     if (imgLine === "Veritas") {
-
       //Mapa de Veritas
-      const blueOptions = { color: 'blue' }
-      const coordsVeritas = List.find(elemento => elemento.nombre === "Veritas")?.coords;
-      return <div className="MapViewVerita">
-        <MapContainer center={positionVeritas} zoom={14} style={{ width: "100%" }}>
-          {paradas.map((parada) => (
-            parada.Line.lin_id === 2 ?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker> : null
-          ))}
-          {line.map((linea) => (
-            linea.lin_id === 2 ?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker> : null
-          ))}
-          {line.map((linea) => (
-            linea.lin_id === 2 ?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker> : null
-          ))}
+      const blueOptions = { color: "blue" };
+      const coordsVeritas = List.find(
+        (elemento) => elemento.nombre === "Veritas"
+      )?.coords;
+      return (
+        <div className="MapViewVerita">
+          <MapContainer
+            center={positionVeritas}
+            zoom={14}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 2 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 2 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 2 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          {/* <LocationMarker /> */}
-          <LocationTestMarker />
-          <Polyline pathOptions={blueOptions} positions={coordsVeritas} />
-        </MapContainer>
-      </div>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={blueOptions} positions={coordsVeritas} />
+          </MapContainer>
+        </div>
+      );
     }
     if (imgLine === "Milagro") {
-
       //Mapa de Milagro
-      const redOptions = { color: 'red' }
-      const coordsMilagro = List.find(elemento => elemento.nombre === "Milagro")?.coords;
-      return <div className="MapViewGuajira">
-        <MapContainer center={positionMilagro} zoom={13} style={{ width: "100%" }}>
-          {paradas.map((parada) => (
-            parada.Line.lin_id === 3 ?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker> : null
-          ))}
-          {line.map((linea) => (
-            linea.lin_id === 3 ?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker> : null
-          ))}
-          {line.map((linea) => (
-            linea.lin_id === 3 ?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker> : null
-          ))}
+      const redOptions = { color: "red" };
+      const coordsMilagro = List.find(
+        (elemento) => elemento.nombre === "Milagro"
+      )?.coords;
+      return (
+        <div className="MapViewGuajira">
+          <MapContainer
+            center={positionMilagro}
+            zoom={13}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 3 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 3 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 3 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          {/* <LocationMarker /> */}
-          <LocationTestMarker />
-          <Polyline pathOptions={redOptions} positions={coordsMilagro} />
-        </MapContainer>
-      </div>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={redOptions} positions={coordsMilagro} />
+          </MapContainer>
+        </div>
+      );
     }
     if (imgLine === "Galeria") {
-
       //Mapa de Galeria
       const cyanOptions = { color: "cyan" };
-      const coordsGaleria = List.find(elemento => elemento.nombre === "Galeria")?.coords;
-      return <div className="MapViewGuajira">
-        <MapContainer center={positionGaleria} zoom={13} style={{ width: "100%" }}>
-          {paradas.map((parada) => (
-            parada.Line.lin_id === 4 ?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker> : null
-          ))}
-          {line.map((linea) => (
-            linea.lin_id === 4 ?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker> : null
-          ))}
-          {line.map((linea) => (
-            linea.lin_id === 4 ?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker> : null
-          ))}
+      const coordsGaleria = List.find(
+        (elemento) => elemento.nombre === "Galeria"
+      )?.coords;
+      return (
+        <div className="MapViewGuajira">
+          <MapContainer
+            center={positionGaleria}
+            zoom={13}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 4 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 4 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 4 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          {/* <LocationMarker /> */}
-          <LocationTestMarker />
-          <Polyline pathOptions={cyanOptions} positions={coordsGaleria} />
-        </MapContainer>
-      </div>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={cyanOptions} positions={coordsGaleria} />
+          </MapContainer>
+        </div>
+      );
     }
     if (imgLine === "Cinco de Julio") {
-
       //Mapa de cinco de Julio
       const greenOptions = { color: "green" };
-      const coordsCincoJulio = List.find(elemento => elemento.nombre === "Cinco de Julio")?.coords;
-      return <div className="MapViewGuajira">
-        <MapContainer center={positionCincoDeJulio} zoom={13} style={{ width: "100%" }}>
-          {paradas.map((parada) => (
-            parada.Line.lin_id === 8 ?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker> : null
-          ))}
-          {line.map((linea) => (
-            linea.lin_id === 8 ?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker> : null
-          ))}
-          {line.map((linea) => (
-            linea.lin_id === 8 ?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker> : null
-          ))}
+      const coordsCincoJulio = List.find(
+        (elemento) => elemento.nombre === "Cinco de Julio"
+      )?.coords;
+      return (
+        <div className="MapViewGuajira">
+          <MapContainer
+            center={positionCincoDeJulio}
+            zoom={13}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 8 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 8 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 8 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          {/* <LocationMarker /> */}
-          <LocationTestMarker />
-          <Polyline pathOptions={greenOptions} positions={coordsCincoJulio} />
-        </MapContainer>
-      </div>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline pathOptions={greenOptions} positions={coordsCincoJulio} />
+          </MapContainer>
+        </div>
+      );
     }
     if (imgLine === "Bella Vista") {
-
       //Mapa de bella Vista
       const yellowOptions = { color: "yellow" };
-      const coordsBellaVista = List.find(elemento => elemento.nombre === "Bella Vista")?.coords;
-      return <div className="MapViewGuajira">
-        <MapContainer center={positionBellaVista} zoom={14} style={{ width: "100%" }}>
-          {paradas.map((parada) => (
-            parada.Line.lin_id === 9 ?
-              <Marker
-                position={[parada.par_lat, parada.par_long, parada.Line.lin_id]}
-                icon={IconLocation}
-              >
-                <Popup>{parada.par_name}</Popup>
-              </Marker> : null
-          ))}
-          {line.map((linea) => (
-            linea.lin_id === 9 ?
-              <Marker
-                position={[linea.lin_start, linea.lin_close]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker> : null
-          ))}
-          {line.map((linea) => (
-            linea.lin_id === 9 ?
-              <Marker
-                position={[linea.lin_exit_point, linea.lin_arrival_point]}
-                icon={IconLocation2}
-              >
-                <Popup>
-                  {linea.lin_name}
-                  <FontAwesomeIcon icon={faBus} />
-                </Popup>
-              </Marker> : null
-          ))}
+      const coordsBellaVista = List.find(
+        (elemento) => elemento.nombre === "Bella Vista"
+      )?.coords;
+      return (
+        <div className="MapViewGuajira">
+          <MapContainer
+            center={positionBellaVista}
+            zoom={14}
+            style={{ width: "100%" }}
+          >
+            {paradas.map((parada) =>
+              parada.Line.lin_id === 9 ? (
+                <Marker
+                  position={[
+                    parada.par_lat,
+                    parada.par_long,
+                    parada.Line.lin_id,
+                  ]}
+                  icon={IconLocation}
+                >
+                  <Popup>{parada.par_name}</Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 9 ? (
+                <Marker
+                  position={[linea.lin_start, linea.lin_close]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
+            {line.map((linea) =>
+              linea.lin_id === 9 ? (
+                <Marker
+                  position={[linea.lin_exit_point, linea.lin_arrival_point]}
+                  icon={IconLocation2}
+                >
+                  <Popup>
+                    {linea.lin_name}
+                    <FontAwesomeIcon icon={faBus} />
+                  </Popup>
+                </Marker>
+              ) : null
+            )}
 
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          {/* <LocationMarker /> */}
-          <LocationTestMarker />
-          <Polyline pathOptions={yellowOptions} positions={coordsBellaVista} />
-        </MapContainer>
-      </div>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {/* <LocationMarker /> */}
+            <LocationTestMarker />
+            <Polyline
+              pathOptions={yellowOptions}
+              positions={coordsBellaVista}
+            />
+          </MapContainer>
+        </div>
+      );
     }
   };
 
@@ -397,7 +486,7 @@ function Lines() {
       );
       setUser(response.data);
     } catch (error) {
-      console.log('unlogged');
+      console.log("unlogged");
     }
   }, [accessToken, url]);
 
@@ -494,7 +583,7 @@ function Lines() {
 
   const handleHidden = (nombre) => {
     // Obtén el objeto actual del localStorage
-    let data = JSON.parse(localStorage.getItem('lines'));
+    let data = JSON.parse(localStorage.getItem("lines"));
 
     // Busca el objeto con el nombre correspondiente
     let item = data.find((item) => item.nombre === nombre);
@@ -503,7 +592,7 @@ function Lines() {
     item.hidden = item.hidden === true ? false : true;
 
     // Guarda el objeto modificado de nuevo en el localStorage
-    localStorage.setItem('lines', JSON.stringify(data));
+    localStorage.setItem("lines", JSON.stringify(data));
 
     // Actualiza el estado
     // setVisibility(!visibility);
@@ -514,47 +603,70 @@ function Lines() {
   };
 
   function findLineNameByStopDescription(lineData, query) {
-    return lineData.stops.some(stop => 
-      stop.par_name.toLowerCase().includes(query.toLowerCase()) || 
-      stop.par_description.toLowerCase().includes(query.toLowerCase())
+    return lineData.stops.some(
+      (stop) =>
+        stop.par_name.toLowerCase().includes(query.toLowerCase()) ||
+        stop.par_description.toLowerCase().includes(query.toLowerCase())
     );
   }
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredLines = lineList.filter(lin => {
-    return lin.lin_name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      findLineNameByStopDescription(lin, searchQuery);
+  const filteredLines = lineList.filter((lin) => {
+    return (
+      lin.lin_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      findLineNameByStopDescription(lin, searchQuery)
+    );
   });
 
-  const handleSearch = event => {
+  const handleSearch = (event) => {
     setSearchQuery(event.target.value);
+  };
+
+  //Acceder al mapeo de la linea completa
+  const toggleNavbar = (param) => {
+    setSelectId(param);
+    setCollapsed(!collapsed);
+  };
+
+  //Acceder al mapeo de las paradas
+
+  const toggleStop = (param) => {
   };
 
   return (
     <Container fluid className="content">
       <Row>
-      <div className='searchLine'>
-        <Input
-          type="text"
-          className="form-control"
-          value={searchQuery}
-          onChange={handleSearch}
-          placeholder="Buscar Parada..."
-        />
-      </div>
+        <div className="searchLine">
+          <Input
+            type="text"
+            className="form-control"
+            value={searchQuery}
+            onChange={handleSearch}
+            placeholder="Buscar Parada..."
+          />
+        </div>
         {filteredLines.map((line, index) => (
           <div>
-
             <Col className="col" key={line.lin_id}>
               <Card className="cardLine">
-                <CardHeader className="card-head">Linea: {index + 1}</CardHeader>
+                <CardHeader className="card-head">
+                  Linea: {index + 1}
+                  <Button>
+                    <NavbarToggler
+                    onClick={() => toggleNavbar(line.lin_id)}
+                    className="stopDesplegable"
+                  />
+                  Ver paradas
+                  </Button>
+                </CardHeader>
                 <CardBody className="card-body">
                   <CardTitle
                     className="card-tittle"
                     onClick={() => handleShow(line.lin_name)}
                   >
-                    <IconMaker className="iconMap"/>{line.lin_name}
+                    <IconMaker className="iconMap" />
+                    {line.lin_name}
                   </CardTitle>
 
                   <Modal
@@ -572,7 +684,11 @@ function Lines() {
                   </Modal>
 
                   <div className="lineButtons">
-                    <Button className="btn" type="button" onClick={() => handleHidden(line.lin_name)}>
+                    <Button
+                      className="btn"
+                      type="button"
+                      onClick={() => handleHidden(line.lin_name)}
+                    >
                       {visibility[line.lin_name] ? (
                         <FaEyeSlash className="icon" />
                       ) : (
@@ -608,7 +724,9 @@ function Lines() {
                     </Button>
                     <div className="Modal-comment">
                       <Modal isOpen={modal} centered toggle={toggle}>
-                        <ModalHeader toggle={toggle}>Comenta la Ruta</ModalHeader>
+                        <ModalHeader toggle={toggle}>
+                          Comenta la Ruta
+                        </ModalHeader>
                         <ModalBody>
                           <Input
                             type="textarea"
@@ -636,6 +754,38 @@ function Lines() {
                   <div className="Horario">Horario: 7am - 8pm</div>
                   <div className="Pasaje">Pasaje: {line.lin_price}Bs.</div>
                 </CardFooter>
+                <Collapse
+                  isOpen={!collapsed && selectId === line.lin_id}
+                  navbar
+                  className="colapseStop mt-"
+                >
+                  <CardBody className="card-body cardBodyStop">
+                    <ul>
+                      {line.stops.map((stop, index) => (
+                        <li key={index} className="cardStopInt">
+                          <div className="cardStopContent">
+                            <Button onClick={()=> toggleStop(stop.par_name)}>s</Button>
+                            <h4 className="titleStop"> {stop.par_name}</h4>
+                            <p className="descriptionStop">{stop.par_description}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                    <Modal
+                      isOpen={modal1}
+                      className="mt-5"
+                      centered
+                      toggle={handleClose}
+                    >
+                      <ModalHeader toggle={handleClose}>
+                        Visualización {selectedName}
+                      </ModalHeader>
+                      <ModalBody style={{ margin: "0 auto", width: "80%" }}>
+                        {mapLine(selectedName)}
+                      </ModalBody>
+                    </Modal>
+                  </CardBody>
+                </Collapse>
               </Card>
             </Col>
           </div>

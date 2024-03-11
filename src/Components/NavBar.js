@@ -99,7 +99,7 @@ function NavBar(props) {
                   <div className='Divider' />
                 </li>
                 <li key='Ayuda'>
-                  <Link className='btn' to='/Ayuda'>Ayuda</Link>
+                  <Link className='btn' to='/HelpSection'>Ayuda</Link>
                   <div className='Divider' />
                 </li>
                 <li key='CerrarSesion'>
@@ -139,7 +139,7 @@ function NavBar(props) {
                   <div className='Divider' />
                 </li>
                 <li key='Ayuda'>
-                  <Link className='btn' to='/Ayuda'>Comentarios</Link>
+                  <Link className='btn' to='/Comments'>Comentarios</Link>
                   <div className='Divider' />
                 </li>
                 {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Descargar</li>}
@@ -155,7 +155,7 @@ function NavBar(props) {
                   <div className='Divider' />
                 </li>
                 <li key='Ayuda'>
-                  <Link className='btn' to='/Ayuda'>Ayuda</Link>
+                  <Link className='btn' to='/HelpSection'>Ayuda</Link>
                   <div className='Divider' />
                 </li>
                 {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Descargar</li>}

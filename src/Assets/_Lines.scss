@@ -7,16 +7,19 @@
   height: 100%;
   margin-top: 5rem;
 
-  .searchLine{
+  .searchLine {
     position: relative;
-    margin: 5vw;
+    margin: 0 auto;
+    top: -5vw;
     width: 56vw;
     background-color: #0a4333;
-    border-radius: 30%;
+    border-radius: 0vw 0vw 5vw 5vw;
     padding-top: 5vw;
-    padding-bottom: 5vw;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 5px rgba(255, 255, 255, 0.5);
-    .form-control{
+    padding-bottom: 3vw;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2),
+      inset 0 0 5px rgba(255, 255, 255, 0.5);
+    .form-control {
+      margin: 0 auto;
       width: 50vw;
     }
   }
@@ -38,6 +41,9 @@
         font-size: 1rem;
         font-weight: 600;
         text-align: start;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
       .card-body {
@@ -59,7 +65,7 @@
           font-size: 2rem;
           font-weight: 400;
           text-align: start;
-          .iconMap{
+          .iconMap {
             width: 10vw;
           }
         }
@@ -131,6 +137,37 @@
           font-weight: 400;
           text-align: start;
           padding: 0 1rem;
+        }
+      }
+      .stopDesplegable{
+        position:absolute;
+      }
+      .cardBodyStop {
+        display: flex;
+        justify-content: space-around;
+        .cardStopInt {
+          display: flex;
+        }
+        .cardStopContent {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 2.5px solid #e5c034;
+          padding-top: 3.5vw;
+          .titleStop {
+            color: #ded6d6;
+            font-size: 4vw;
+            text-align: center;
+            margin-left: 2vw;
+            text-wrap: wrap;
+          }
+          .descriptionStop {
+            color: #bbb9b9;
+            font-size: 2.5vw;
+            text-align: center;
+            margin: 0 1vw;
+            text-wrap: wrap;
+          }
         }
       }
     }
