@@ -56,7 +56,9 @@ function Lines() {
   const [selectedName, setSelectedName] = useState("");
   const [com_comment, setCom_comment] = useState("");
   const [selectedLineId, setSelectedLineId] = useState(null);
+  const [SelectedStop, setSelectedStop] = useState(null);
   const [modal1, setModal1] = useState(false);
+  const [modal2, setModal2] = useState(false);
   const [paradas, setParadas] = useState([]);
   const [line, setLine] = useState([]);
   const positionGuajira = [10.675, -71.629];
@@ -67,6 +69,7 @@ function Lines() {
   const positionBellaVista = [10.66, -71.61];
   const [selectId, setSelectId] = useState(null);
   const [collapsed, setCollapsed] = React.useState(true);
+  // const [stop, setStop] = useState(null);
 
   //Funcion para el chqueo y muestra de mapas en los modales
 
@@ -473,9 +476,18 @@ function Lines() {
 
   const toggle = () => setModal(!modal);
 
+  const handleShowStop = (stop) => {
+    setModal2(true);
+    setSelectedStop(stop);
+  };
+
   //Cerrar los modales
   const handleClose = () => {
     setModal1(false);
+  };
+
+  const handleCloseStop = () => {
+    setModal2(false);
   };
 
   //Token para el aceso
@@ -528,6 +540,15 @@ function Lines() {
       console.log(error);
     }
   }, [url]);
+
+  // const fetchStop = useCallback(async () => {
+  //   try {
+  //     const response = await axios.get(`${url}/stops`);
+  //     setStop(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [url]);
 
   //Renderizacion de las funciones
   useEffect(() => {
@@ -629,10 +650,15 @@ function Lines() {
     setCollapsed(!collapsed);
   };
 
+  function findStopName(stop) {
+    return paradas.find(data => data.par_id === stop);
+  }
+
   //Acceder al mapeo de las paradas
 
-  const toggleStop = (param) => {
-  };
+  const mapStop = (param) => {
+    console.log(findStopName(param));
+};
 
   return (
     <Container fluid className="content">
@@ -764,7 +790,7 @@ function Lines() {
                       {line.stops.map((stop, index) => (
                         <li key={index} className="cardStopInt">
                           <div className="cardStopContent">
-                            <Button onClick={()=> toggleStop(stop.par_name)}>s</Button>
+                            <Button onClick={() => handleShowStop(stop.par_name)}>s</Button>
                             <h4 className="titleStop"> {stop.par_name}</h4>
                             <p className="descriptionStop">{stop.par_description}</p>
                           </div>
@@ -772,16 +798,16 @@ function Lines() {
                       ))}
                     </ul>
                     <Modal
-                      isOpen={modal1}
+                      isOpen={modal2}
                       className="mt-5"
                       centered
-                      toggle={handleClose}
+                      toggle={handleCloseStop}
                     >
-                      <ModalHeader toggle={handleClose}>
-                        Visualización {selectedName}
+                      <ModalHeader toggle={handleCloseStop}>
+                        Visualización {SelectedStop}
                       </ModalHeader>
                       <ModalBody style={{ margin: "0 auto", width: "80%" }}>
-                        {mapLine(selectedName)}
+                        {mapStop(SelectedStop)}
                       </ModalBody>
                     </Modal>
                   </CardBody>
