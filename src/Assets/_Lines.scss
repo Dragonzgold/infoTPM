@@ -45,8 +45,13 @@
         justify-content: space-between;
         align-items: center;
 
-        .btnArrow{
+        .btnArrow {
           background-color: #13684b;
+          border: none;
+        }
+        .btnArrow:hover{
+          border: none;
+          background-color: none;
         }
       }
 
@@ -60,7 +65,7 @@
         height: 100%;
         box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
 
-        .btnStop{
+        .btnStop {
           background-color: #0a4333;
         }
 
@@ -147,34 +152,68 @@
           padding: 0 1rem;
         }
       }
-      .stopDesplegable{
-        position:absolute;
+      .stopDesplegable {
+        position: absolute;
+      }
+      .stopDesplegable:hover {
+        background-color: none;
       }
       .cardBodyStop {
         display: flex;
         justify-content: space-around;
-        .cardStopInt {
-          display: flex;
+        .ListStop {
+          padding: 0;
+          .cardStopInt {
+            display: flex;
+            .btnStop {
+              border: none;
+              .pointMaker{
+                height: 7vw;
+                width: 7vw;
+              }
+            }
+          }
         }
         .cardStopContent {
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          justify-content: flex-start;
+          flex-wrap: wrap;
           border-bottom: 2.5px solid #e5c034;
           padding-top: 3.5vw;
           .titleStop {
             color: #ded6d6;
-            font-size: 4vw;
-            text-align: center;
+            width: 100%;
+            font-size: 3vw;
             margin-left: 2vw;
             text-wrap: wrap;
           }
           .descriptionStop {
             color: #bbb9b9;
-            font-size: 2.5vw;
-            text-align: center;
+            width: 100%;
+            font-size: 1.5vw;
             margin: 0 1vw;
             text-wrap: wrap;
+          }
+        }
+        @media screen and (max-width: 500px) {
+          .ListStop {
+          .cardStopInt {
+            .btnStop {
+              .pointMaker{
+                height: 13vw;
+                width: 13vw;
+              }
+            }
+          }
+        }
+          .cardStopContent {
+            .titleStop {
+              font-size: 7vw;
+            }
+            .descriptionStop {
+              font-size: 4vw;
+            }
           }
         }
       }

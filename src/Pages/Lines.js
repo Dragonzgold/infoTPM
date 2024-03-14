@@ -789,13 +789,13 @@ function Lines() {
                   className="colapseStop mt-"
                 >
                   <CardBody className="card-body cardBodyStop">
-                    <ul>
+                    <ul className="ListStop">
                       {line.stops.map((stop, index) => (
                         <li key={index} className="cardStopInt">
-                          <div className="cardStopContent">
                             <Button onClick={() => handleShowStop(stop.par_id)} className="btnStop">
-                              <PointRed />
+                              <PointRed className="pointMaker"/>
                             </Button>
+                          <div className="cardStopContent">
                             <h4 className="titleStop"> {stop.par_name}</h4>
                             <p className="descriptionStop">{stop.par_description}</p>
                           </div>
