@@ -41,6 +41,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBus } from "@fortawesome/free-solid-svg-icons";
 import { List } from "../Components/List";
 import { ReactComponent as IconMaker } from "../Assets/Images/mapPrueba.svg";
+import { ReactComponent as IconArrowDown } from "../Assets/Images/flechaBaja.svg";
+import { ReactComponent as PointRed } from "../Assets/Images/pointRed.svg";
 
 //Usestate
 
@@ -651,14 +653,15 @@ function Lines() {
   };
 
   function findStopName(stop) {
-    return paradas.find(data => data.par_id === stop);
+    return paradas.find(data => data.par_id === stop.par_id);
   }
 
   //Acceder al mapeo de las paradas
 
   const mapStop = (param) => {
-    console.log(findStopName(param));
-};
+    const stop = findStopName({ par_id: param });
+    return stop ? stop : '';
+  };
 
   return (
     <Container fluid className="content">
@@ -678,12 +681,12 @@ function Lines() {
               <Card className="cardLine">
                 <CardHeader className="card-head">
                   Linea: {index + 1}
-                  <Button>
+                  <Button className="btnArrow">
                     <NavbarToggler
-                    onClick={() => toggleNavbar(line.lin_id)}
-                    className="stopDesplegable"
-                  />
-                  Ver paradas
+                      onClick={() => toggleNavbar(line.lin_id)}
+                      className="stopDesplegable"
+                    />
+                    <IconArrowDown />
                   </Button>
                 </CardHeader>
                 <CardBody className="card-body">
@@ -790,7 +793,9 @@ function Lines() {
                       {line.stops.map((stop, index) => (
                         <li key={index} className="cardStopInt">
                           <div className="cardStopContent">
-                            <Button onClick={() => handleShowStop(stop.par_name)}>s</Button>
+                            <Button onClick={() => handleShowStop(stop.par_id)} className="btnStop">
+                              <PointRed />
+                            </Button>
                             <h4 className="titleStop"> {stop.par_name}</h4>
                             <p className="descriptionStop">{stop.par_description}</p>
                           </div>
@@ -804,10 +809,88 @@ function Lines() {
                       toggle={handleCloseStop}
                     >
                       <ModalHeader toggle={handleCloseStop}>
-                        Visualización {SelectedStop}
+                        Visualización {mapStop(SelectedStop).par_name}
                       </ModalHeader>
                       <ModalBody style={{ margin: "0 auto", width: "80%" }}>
-                        {mapStop(SelectedStop)}
+                        {
+                          <MapContainer
+                            center={[
+                              mapStop(SelectedStop).par_lat,
+                              mapStop(SelectedStop).par_long,
+                            ]}
+                            zoom={15}
+                            style={{ width: "100%" }}
+                          >
+                            <Marker
+                              position={[
+                                mapStop(SelectedStop).par_lat,
+                                mapStop(SelectedStop).par_long,
+                              ]}
+                              icon={IconLocation}
+                            >
+                              <Popup>{mapStop(SelectedStop).par_name}</Popup>
+                            </Marker>
+                            <TileLayer
+                              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            />
+                            <Polyline
+                              pathOptions={{
+                                color: {
+                                  Guajira: "lime",
+                                  Veritas: "blue",
+                                  Milagro: "red",
+                                  Galeria: "cyan",
+                                  "Cinco de Julio": "green",
+                                  "Bella Vista": "yellow",
+                                }[mapStop(SelectedStop)?.Line?.lin_name] || "black"
+                              }}
+                              positions={
+                                List.find(
+                                  (elemento) => {
+                                    const mapStopResult = mapStop(SelectedStop);
+                                    return mapStop(SelectedStop) && mapStopResult.Line && elemento.nombre === mapStopResult.Line.lin_name
+                                  }
+                                )?.coords || []
+                              }
+                            />
+                            {/* {Array.isArray(line) ? line.map((linea) =>
+                              linea.lin_id === mapStop(SelectedStop).Line.lin_id ? (
+                                <Marker
+                                  position={[mapStop(SelectedStop).Line.lin_exit_point, mapStop(SelectedStop).Line.lin_arrival_point]}
+                                  icon={IconLocation2}
+                                >
+                                  <Popup>
+                                    {linea.lin_name}
+                                    <FontAwesomeIcon icon={faBus} />
+                                  </Popup>
+                                </Marker>
+                              ) : null
+                            ) : null} */}
+                            {mapStop(SelectedStop) ? (
+                              <Marker
+                                position={[mapStop(SelectedStop).Line.lin_exit_point, mapStop(SelectedStop).Line.lin_arrival_point]}
+                                icon={IconLocation2}
+                              >
+                                <Popup>
+                                  {mapStop(SelectedStop).Line.lin_name}
+                                  <FontAwesomeIcon icon={faBus} />
+                                </Popup>
+                              </Marker>
+                            ) : null}
+                            {mapStop(SelectedStop) ? (
+                              <Marker
+                                position={[mapStop(SelectedStop).Line.lin_start, mapStop(SelectedStop).Line.lin_close]}
+                                icon={IconLocation2}
+                              >
+                                <Popup>
+                                  {mapStop(SelectedStop).Line.lin_name}
+                                  <FontAwesomeIcon icon={faBus} />
+                                </Popup>
+                              </Marker>
+                            ) : null}
+                          </MapContainer>
+                        }
                       </ModalBody>
                     </Modal>
                   </CardBody>
