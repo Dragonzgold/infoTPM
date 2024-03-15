@@ -1,0 +1,21 @@
+.FormRecoverPass{
+    text-align: center;
+    color: azure;
+    font-size: 5vw;
+
+    .confirmarPass{
+        padding-top: 10%;
+    }
+}
+
+.buttonsRecovery{
+    padding-top: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    .btnRecovery{
+        width: 100%;
+        margin-bottom: 10%;
+    }
+}

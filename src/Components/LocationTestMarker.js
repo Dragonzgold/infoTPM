@@ -3,7 +3,6 @@ import { Marker, Popup, useMapEvents } from 'react-leaflet'
 import { IconLocationBus } from "../Components/IconLocationBus";
 import { useDataContext } from '../Context/dataContext';
 import axios from 'axios';
-import { Button } from "reactstrap";
 
 function LocationTestMarker() {
   const { url, accessToken } = useDataContext();
@@ -70,14 +69,7 @@ function LocationTestMarker() {
       .filter(bus => bus.bus_status === 'active')
       .map((bus) => (
         <Marker key={bus.bus_id} position={{ lat: bus.bus_lat, lng: bus.bus_lon }} icon={IconLocationBus}>
-          <Popup style={{textAlign:'center'}}>
-            {bus.Line.lin_name}
-            <br/>
-            {bus.bus_plate}
-            <br/>
-            <Button>SOS</Button>
-          </Popup>
-          
+          <Popup>Bus here</Popup>
         </Marker>
       ))
   )

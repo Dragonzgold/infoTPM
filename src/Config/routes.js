@@ -12,7 +12,7 @@ import { StopsEdit } from '../Pages/StopsEdit';
 import { LinesEdit } from '../Pages/LinesEdit';
 import { Buses } from '../Pages/Buses';
 import { Comments } from '../Pages/Comments';
-
+import { RecoverUpdate } from '../Pages/RecoverUpdate';
 
 const routes = [
   {
@@ -84,6 +84,11 @@ const routes = [
     title: 'Comments',
     path: '/Comments',
     component: Comments,
+  },
+  {
+    title: 'RecoverUpdate',
+    path: '/RecoverUpdate/:id/:email',
+    component: RecoverUpdate,
   },
   {
     title: 'Map',

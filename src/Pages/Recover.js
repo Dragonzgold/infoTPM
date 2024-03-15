@@ -1,50 +1,34 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios';
-import { Link } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
-import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Link, useHistory, Redirect } from 'react-router-dom';
+import { useDataContext } from '../Context/dataContext';
 
 function Recover() {
-  const [to, setTo] = useState("");
-  const [usuarios, setUsuarios] = useState([]);
+  const { logged, url } = useDataContext();
   const history = useHistory();
+  const [to, setTo] = useState("");
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const handleSubmit = async () => {
     try {
-      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
-      setUsuarios(response.data);
+      await axios.post(`${url}/Mailer/emailRecovery/${to}`);
+      toast.success('El correo fue enviado con éxito');
+      setTo('');
+      setTimeout(() => {
+        history.push('/Login');
+      }, 3000);
     } catch (error) {
       console.log(error);
+      toast.error('Hubo un error al enviar el correo');
     }
   };
 
-  const handleSubmit = (event) =>{
-    event.preventDefault();
-    const user = usuarios.find((user) => user.usu_email !== to);
-    if (!user) {
-      alert('El correo no existe');
-      return;
-    }
-    try {
-      axios.post(
-        'https://infotpm-backend-production.up.railway.app/Email',
-        {
-          to,
-        }
-      );
-      alert('El correo fue enviado con exito');
-      setTo('');
-      history.push('/Account');
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   return (
+    logged ? (
+      <Redirect to="/Perfil" />
+    ) : (
     <div>
       <div className='containerRecuperarPassword'>
         <h1 className='titulo'>
@@ -77,6 +61,7 @@ function Recover() {
       </div>
     </div>
   )
+  );
 }
 
 export { Recover }

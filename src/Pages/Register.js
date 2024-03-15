@@ -17,7 +17,7 @@ function Register() {
 
   const handleSubmit = async (event) => {
     if (usu_name.length <= 13 && usu_lastName.length <= 13) {
-      if(usu_password.length >8){
+      if(usu_password.length >=6 && usu_password.length <=15){
         event.preventDefault();
       try {
         await axios.post(`${url}/Auth/register`, {
@@ -27,7 +27,7 @@ function Register() {
           usu_password,
           usu_role: "user",
         });
-
+        await axios.post(`${url}/Mailer/EmailWelcome/${usu_email}`);
         toast.success("¡Registro exitoso!", {
           position: "bottom-right",
           autoClose: 5000,
