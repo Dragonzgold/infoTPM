@@ -17,7 +17,7 @@ function Register() {
 
   const handleSubmit = async (event) => {
     if (usu_name.length <= 13 && usu_lastName.length <= 13) {
-      if(usu_password.length >=6 && usu_password.length <=15){
+      if(usu_password.length >8){
         event.preventDefault();
       try {
         await axios.post(`${url}/Auth/register`, {
