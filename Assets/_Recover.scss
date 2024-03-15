@@ -1,0 +1,89 @@
+.containerRecuperarPassword {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90vh;
+    width: 80%;
+    margin: auto;
+    margin-top: 5em;
+    margin-bottom: 5em;
+    background-color: #13684B;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+    .titulo {
+        color: #FFFFFF;
+        margin-bottom: 1.3em;
+        text-align: center;
+        font-family: 'Segoe UI';
+        font-style: normal;
+
+        .rayaTitulo {
+            background-color: #E5C034;
+            border: 1px solid #E5C034;
+        }
+    }
+
+    .containerInternoPassword {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 70%;
+        width: 90%;
+        background-color: #0A4333;
+        box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+        .Form {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            height: 90%;
+
+            .introducirCorreoPassword {
+                position: relative;
+                color: #FFFFFF;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                text-align: center;
+                font-size: 120%;
+            }
+
+            .correoPassword {
+                color: #FFFFFF;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 170%;
+                line-height: 24px;
+            }
+
+            .inputCorreoPassword {
+                width: 100%;
+                border-radius: 10px;
+            }
+
+            .RecoverButtons {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                margin-top: 1em;
+
+                .btnRecover {
+                    font-family: 'Segoe UI';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 18px;
+                    height: 70px;
+                    width: 120px;
+                    background: #E5C034;
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                    border-radius: 10px;
+                }
+            }
+        }
+    }
+}
+
+// Path: src\Assets\_Recover.scss

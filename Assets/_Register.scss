@@ -1,0 +1,256 @@
+.containerInternoRegistro{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 110vh;
+        width: 90%;
+        margin: auto;
+        margin-top: 5em;
+        margin-bottom: 5em;
+        background-color: #13684B;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+        .titulo{
+            color: #FFFFFF;
+            margin-bottom: 1.3em;
+            text-align: center;
+            font-family: 'Segoe UI';
+            font-style: normal;
+
+            .rayaTitulo{
+                background-color: #E5C034;
+                border: 1px solid #E5C034;
+            }
+        }
+    
+    .containerInformacionRegistro{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80%;
+        width: 90%;
+        background-color: #0A4333;
+        box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+        .Form{
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            height: 90%;
+
+            .FormName{
+                display: flex;
+                flex-direction: row;
+
+                    .nombreRegistro{
+                        color: #FFFFFF;
+                        font-family: 'Segoe UI';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 170%;
+                        line-height: 24px;
+                    }
+                    
+                    .inputNombreRegistro{
+                        width: 80%;
+                        border-radius: 10px;
+                    }
+                
+                .apellidoRegistro{
+                    color: #FFFFFF;
+                    font-family: 'Segoe UI';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 170%;
+                    line-height: 24px;
+                }
+                
+                .inputApellidoRegistro{
+                    width: 100%;
+                    border-radius: 10px;
+                }
+            }
+            
+            .correoRegistro{
+                color: #FFFFFF;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 170%;
+                line-height: 24px;
+                margin-top: 0.5em;
+            }
+            
+            .inputCorreoRegistro{
+                width: 100%;
+                border-radius: 10px;
+            }
+            
+            .contrasenaRegistro{
+                color: #FFFFFF;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 170%;
+                line-height: 24px;
+                margin-top: 0.5em;
+            }
+            
+            .inputContrasenaRegistro{
+                width: 100%;
+                border-radius: 10px;
+            }
+            
+            .confirmarContrasenaRegistro{
+                color: #FFFFFF;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 170%;
+                line-height: 24px;
+                margin-top: 0.5em;
+            }
+            
+            .inputConfirmarContrasenaRegistro{
+                width: 100%;
+                border-radius: 10px;
+            }
+            
+            .nacimientoRegistro{
+                color: #FFFFFF;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 170%;
+                line-height: 24px;
+                margin-top: 0.5em;
+            }
+            
+            .inputDiaRegistro{
+                width: 100%;
+                border-radius: 10px;
+            }
+            
+            .RegisterButtons{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                margin-top: 1em;
+
+                .btnRegister{
+                    font-family:'Segoe UI'; 
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 18px;
+                    height: 70px;
+                    width: 120px;
+                    background: #E5C034;
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                    border-radius: 10px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:420px) {
+    .containerInformacionRegistro{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80%;
+        width: 90%;
+        background-color: #0A4333;
+        box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+        .Form{
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            height: 90%;
+
+            .FormName{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+
+                .nombreRegistro{
+                    color: #FFFFFF;
+                    font-family: 'Segoe UI';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 170%;
+                    line-height: 24px;
+                }
+                
+                .inputNombreRegistro{
+                    width: 100%;
+                    border-radius: 10px;
+                }
+                
+                .apellidoRegistro{
+                    color: #FFFFFF;
+                    font-family: 'Segoe UI';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 170%;
+                    line-height: 24px;
+                }
+                
+                .inputApellidoRegistro{
+                    width: 100%;
+                    border-radius: 10px;
+                }
+            }
+            
+            .correoRegistro{
+                color: #FFFFFF;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 170%;
+                line-height: 24px;
+                margin-top: 0.5em;
+            }
+            
+            .inputCorreoRegistro{
+                width: 100%;
+                border-radius: 10px;
+            }
+            
+            .contrasenaRegistro{
+                color: #FFFFFF;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 170%;
+                line-height: 24px;
+                margin-top: 0.5em;
+            }
+            
+            .inputContrasenaRegistro{
+                width: 100%;
+                border-radius: 10px;
+            }
+            
+            .confirmarContrasenaRegistro{
+                color: #FFFFFF;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 170%;
+                line-height: 24px;
+                margin-top: 0.5em;
+            }
+
+            .inputConfirmarContrasenaRegistro{
+                width: 100%;
+                border-radius: 10px;
+            }
+        }
+    }
+}
+
+// Path: src\Assets\_Register.scss

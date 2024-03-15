@@ -1,0 +1,26 @@
+@use 'NavBar';
+@use 'Login';
+@use 'Lines';
+@use 'Leaflet';
+@use 'Map';
+@use 'Perfil';
+@use 'Register';
+@use 'Recover';
+@use 'Help';
+@use 'LogAdmin';
+@use 'Editor';
+@use 'Users';
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Noto Sans','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('../Assets/Images/Mcbo-bg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    overflow-x: hidden;
+}

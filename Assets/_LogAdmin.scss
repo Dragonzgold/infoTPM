@@ -1,0 +1,156 @@
+.fondo{
+
+    .containerInicioSesion{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 92.9vh;
+        width: 80%;
+        margin: auto;
+        margin-top: 3.5em;
+        background-color: #13684B;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+        .titulo{
+            color: #FFFFFF;
+            margin-bottom: 1.3em;
+            text-align: center;
+            font-family: 'Segoe UI';
+            font-style: normal;
+
+            .rayaTitulo{
+                background-color: #E5C034;
+                border: 1px solid #E5C034;
+            }
+
+            .error{
+                color: #E5C034;
+                font-size: 50%;
+                font-weight: 600;
+            }
+        }
+        
+        .containerInterno{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70%;
+            width: 90%;
+            background-color: #0A4333;
+            box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+            .Form{
+                display: flex;
+                flex-direction: column;
+
+                .correoInicioSesion{
+                    color: #FFFFFF;
+                    font-family: 'Segoe UI';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 170%;
+                    line-height: 24px;
+                }
+
+                .containerCorreo{
+                    width: 100%;
+                    border-radius: 10px;
+                } 
+
+                .passwordInicioSesion{
+                    color: #FFFFFF;
+                    font-family: 'Segoe UI';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 170%;
+                    line-height: 24px;
+                    margin-top: 0.5em;
+                }
+                
+                .containerPassword{
+                    width: 100%;
+                    border-radius: 10px;
+                }
+
+                .olvidarContraseña{
+                    color: #FFFFFF;
+                    font-family: 'Segoe UI';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 95%;
+                    line-height: 24px;
+                    text-decoration: none;
+                    margin-top: 0.5em;
+                    text-align: center;
+
+                    a{
+                        text-decoration: none;
+                        color: #FFFFFF;
+                    }
+                    
+                    a:hover{
+                        color: #BBBBBB;
+                    }
+                }
+                
+                .LoginButtons__admin{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    margin-top: 1em;
+
+                    .btnLogin{
+                        font-family:'Segoe UI'; 
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 18px;
+                        height: 70px;
+                        width: 250px;
+                        background: #E5C034;
+                        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                        border-radius: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:420px) {
+    .containerInicioSesion{
+        width: 100%;
+        height: 100vh;
+        margin-top: 0em;
+        margin-bottom: 0em;
+        box-shadow: none;
+
+        .containerInterno{
+            height: 100%;
+            width: 100%;
+            box-shadow: none;
+
+            .Form{
+                .correoInicioSesion{
+                    font-size: 150%;
+                }
+
+                .passwordInicioSesion{
+                    font-size: 150%;
+                }
+
+                .olvidarContraseña{
+                    font-size: 85%;
+                }
+
+                .LoginButtons__admin{
+                    .btnLogin{
+                        font-size: 16px;
+                        height: 60px;
+                        width: 100px;
+                    }
+                }
+            }
+        }
+    }
+}
