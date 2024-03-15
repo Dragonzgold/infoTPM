@@ -1,22 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import {
-  Input,
-  Button,
-  Label,
-  FormFeedback
-} from 'reactstrap';
-import { Link, useParams } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
-import { useDataContext } from '../Context/dataContext';
-import { toast } from 'react-toastify';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import { Input, Button, Label, FormFeedback } from "reactstrap";
+import { Link, useParams } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { useDataContext } from "../Context/dataContext";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 function RecoverUpdate() {
   const history = useHistory();
   const [userEmail, setUserEmail] = useState([]);
-  const [usu_password, setUse_password] = useState('');
-  const [use_Confirmpassword, setUse_Confirmpassword] = useState('');
+  const [usu_password, setUse_password] = useState("");
+  const [use_Confirmpassword, setUse_Confirmpassword] = useState("");
   const { url } = useDataContext();
   const { id, email } = useParams();
 
@@ -24,15 +19,12 @@ function RecoverUpdate() {
     event.preventDefault();
 
     try {
-      await axios.put(
-        `${url}/Users/PasswordRecovery/${id}`,
-        {
-          usu_password
-        },
-      );
-      toast.success('Contraseña actualizada');
+      await axios.put(`${url}/Users/PasswordRecovery/${id}`, {
+        usu_password,
+      });
+      toast.success("Contraseña actualizada");
       setTimeout(() => {
-        history.push('/Account');
+        history.push("/Account");
       }, 5000);
     } catch (error) {
       console.log(error);
@@ -197,19 +189,21 @@ function RecoverUpdate() {
           <form onSubmit={handleSubmit} className="Form">
             <div className="FormRecoverPass">
               <div className="Nombre">
-                <Label className="namePassword" htmlFor="exampleName">
+                <Label className="RecoverPass" htmlFor="exampleName">
                   Contraseña
                 </Label>
-                <Input
-                  className="inputNombreRegistro"
-                  id="exampleName"
-                  type="password"
-                  name="text"
-                  onChange={(e) => setUse_password(e.target.value)}
-                  invalid={usu_password.length < 8}
-                  placeholder="Introduzca su contraseña"
-                  required
-                />
+                <div className="inputPassRecover">
+                  <Input
+                    className="inputPass"
+                    id="exampleName"
+                    type="password"
+                    name="text"
+                    onChange={(e) => setUse_password(e.target.value)}
+                    invalid={usu_password.length < 8}
+                    placeholder="Introduzca su contraseña"
+                    required
+                  />
+                </div>
                 {usu_password.length < 8 && (
                   <FormFeedback invalid>
                     Su contraseña debe contener mínimo 8 caracteres
@@ -217,16 +211,16 @@ function RecoverUpdate() {
                 )}
               </div>
               <div className="confirmarPass">
-                <Label className="apellidoRegistro" htmlFor="exampleApellido">
+                <Label className="" htmlFor="exampleApellido">
                   Confirmar Contraseña
                 </Label>
                 <Input
-                  className="inputApellidoRegistro"
+                  className="inputRecoverPass"
                   type="password"
                   name="Confirm Password"
                   onChange={(e) => setUse_Confirmpassword(e.target.value)}
                   invalid={use_Confirmpassword !== usu_password}
-                  placeholder="Introduzca su contraseña"
+                  placeholder="Vuelva a escribir su contraseña"
                   id="exampleApellido"
                   required
                 />
@@ -238,23 +232,28 @@ function RecoverUpdate() {
               </div>
             </div>
             <div className="buttonsRecovery">
+              <div>
+              <Link to="/Login">
+                <Button color="secondary">Volver</Button>
+              </Link>
+              </div>
               <Button
-                className='btnRecovery'
+                className="btnRecovery"
                 type="submit"
-                disabled={usu_password !== use_Confirmpassword || usu_password.length < 8 || email !== userEmail.usu_email || parseInt(id) !== userEmail.usu_id}
-                color='primary'>
+                disabled={
+                  usu_password !== use_Confirmpassword ||
+                  usu_password.length < 8 ||
+                  email !== userEmail.usu_email ||
+                  parseInt(id) !== userEmail.usu_id
+                }
+                color="primary"
+              >
                 Recuperar contraseña
               </Button>
-              {(email !== userEmail.usu_email || parseInt(id) !== userEmail.usu_id) && (
-                <FormFeedback>
-                  Los datos no coinciden
-                </FormFeedback>
+              {(email !== userEmail.usu_email ||
+                parseInt(id) !== userEmail.usu_id) && (
+                <FormFeedback>Los datos no coinciden</FormFeedback>
               )}
-              <Link to='/Login'>
-                <Button color='secondary'>
-                  Volver
-                </Button>
-              </Link>
             </div>
           </form>
         </div>
