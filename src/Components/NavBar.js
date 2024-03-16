@@ -1,47 +1,46 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-} from "reactstrap";
-import { useDataContext } from '../Context/dataContext'
-import { clearLocalStorage } from '../Hooks/useLocalStorage'
-import { ReactComponent as IconMaker } from '../Assets/Images/map.svg';
+import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from "reactstrap";
+import { useDataContext } from "../Context/dataContext";
+import { clearLocalStorage } from "../Hooks/useLocalStorage";
+import { ReactComponent as IconMaker } from "../Assets/Images/map.svg";
 
 function NavBar(props) {
   const { accessAdminToken, accessToken, logged, url } = useDataContext();
   const [isReadyForInstall, setIsReadyForInstall] = React.useState(false);
   const [admin, setAdmin] = useState([]);
   const [user, setUser] = useState([]);
-  const [collapsed, setCollapsed] = React.useState(true);
-  const toggleNavbar = () => setCollapsed(!collapsed);
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
   const fetchDataAdmin = useCallback(async () => {
     try {
-      const response = await axios.get(`${url}/Auth/findByTokenAdmin/${accessAdminToken.access_token}`);
+      const response = await axios.get(
+        `${url}/Auth/findByTokenAdmin/${accessAdminToken.access_token}`
+      );
       setAdmin(response.data);
-    } catch (error) {
-    }
+    } catch (error) {}
   }, [accessAdminToken, url]);
 
   const fetchDataUUser = useCallback(async () => {
     try {
-      const response = await axios.get(`${url}/Auth/findByToken/${accessToken.access_token}`);
+      const response = await axios.get(
+        `${url}/Auth/findByToken/${accessToken.access_token}`
+      );
       setUser(response.data);
-    } catch (error) {
-    }
+    } catch (error) {}
   }, [accessToken, url]);
 
   const clearLocal = () => {
     clearLocalStorage();
     setTimeout(() => {
-      window.location.href = '/';
+      window.location.href = "/";
     }, 500);
-  }
+  };
+
+  const toggleNavbar = () => {
+    setIsNavbarOpen(!isNavbarOpen);
+  };
 
   useEffect(() => {
     window.addEventListener("beforeinstallprompt", (event) => {
@@ -78,92 +77,139 @@ function NavBar(props) {
   }
 
   return (
-
     <div>
       <Navbar color="faded" light className="navbar">
         <NavbarBrand href="/" className="me-auto">
-          <h1 className="title1">InfoTPM<IconMaker className="IconMaker"/></h1>
+          <h1 className="title1">
+            InfoTPM
+            <IconMaker className="IconMaker" />
+          </h1>
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="botonDesplegable" />
-        <Collapse isOpen={!collapsed} navbar className="desplegable">
+        <Collapse isOpen={isNavbarOpen} navbar className="desplegable">
           <Nav navbar>
-            {logged ?
-            user.usu_role === 'user' || user.usu_role === 'Driver' ? (
-              <ul className='buttons'>
-                <li key='Perfil'>
-                  <Link className='btn' to='/Perfil'>Perfil</Link>
-                  <div className='Divider' />
+            {logged ? (
+              user.usu_role === "user" || user.usu_role === "Driver" ? (
+                <ul className="buttons">
+                  <li key="Perfil">
+                    <a className="btn" href="/Perfil" onClick={toggleNavbar}>
+                      Perfil
+                    </a>
+                    <div className="Divider" />
+                  </li>
+                  <li key="Lineas">
+                    <a className="btn" href="/Lines">
+                      Lineas
+                    </a>
+                    <div className="Divider" />
+                  </li>
+                  <li key="Ayuda">
+                    <a className="btn" href="/HelpSection">
+                      Ayuda
+                    </a>
+                    <div className="Divider" />
+                  </li>
+                  <li key="CerrarSesion">
+                    <Link className="btn" to="/" onClick={clearLocal}>
+                      Cerrar Sesion
+                    </Link>
+                    <div className="Divider" />
+                  </li>
+                  {isReadyForInstall && (
+                    <li className="btn download-btn" onClick={downloadApp}>
+                      Download
+                    </li>
+                  )}
+                </ul>
+              ) : admin !== undefined ? (
+                <ul className="buttons">
+                  <li key="Dashboard">
+                    <a className="btn" href="/VariableEditor">
+                      Panel de Control
+                    </a>
+                    <div className="Divider" />
+                  </li>
+                  <li key="Lineas">
+                    <a className="btn" href="/Lines">
+                      Lineas
+                    </a>
+                    <div className="Divider" />
+                  </li>
+                  <li key="Comentarios">
+                    <a className="btn" href="/Comments">
+                      Comentarios
+                    </a>
+                    <div className="Divider" />
+                  </li>
+                  <li key="CerrarSesion">
+                    <Link className="btn" to="/" onClick={clearLocal}>
+                      Cerrar Sesion
+                    </Link>
+                    <div className="Divider" />
+                  </li>
+                  {isReadyForInstall && (
+                    <li className="btn download-btn" onClick={downloadApp}>
+                      Download
+                    </li>
+                  )}
+                </ul>
+              ) : (
+                <ul className="buttons">
+                  <li key="Perfil">
+                    <a className="btn" href="/Perfil">
+                      Perfil
+                    </a>
+                    <div className="Divider" />
+                  </li>
+                  <li key="Lineas">
+                    <a className="btn" href="/Lines">
+                      Lineas
+                    </a>
+                    <div className="Divider" />
+                  </li>
+                  <li key="Ayuda">
+                    <a className="btn" href="/Comments">
+                      Comentarios
+                    </a>
+                    <div className="Divider" />
+                  </li>
+                  {isReadyForInstall && (
+                    <li className="btn download-btn" onClick={downloadApp}>
+                      Descargar
+                    </li>
+                  )}
+                </ul>
+              )
+            ) : (
+              <ul className="buttons">
+                <li key="Account">
+                  <a className="btn" href="/Account">
+                    Cuenta
+                  </a>
+                  <div className="Divider" />
                 </li>
-                <li key='Lineas'>
-                  <Link className='btn' to='/Lines'>Lineas</Link>
-                  <div className='Divider' />
+                <li key="Lineas">
+                  <a className="btn" href="/Lines">
+                    Lineas
+                  </a>
+                  <div className="Divider" />
                 </li>
-                <li key='Ayuda'>
-                  <Link className='btn' to='/HelpSection'>Ayuda</Link>
-                  <div className='Divider' />
+                <li key="Ayuda">
+                  <a className="btn" href="/HelpSection">
+                    Ayuda
+                  </a>
+                  <div className="Divider" />
                 </li>
-                <li key='CerrarSesion'>
-                  <Link className='btn' to='/' onClick={clearLocal}>Cerrar Sesion</Link>
-                  <div className='Divider' />
-                </li>
-                {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Download</li>}
+                {isReadyForInstall && (
+                  <li className="btn download-btn" onClick={downloadApp}>
+                    Descargar
+                  </li>
+                )}
               </ul>
-             ) : admin !== undefined ? (
-              <ul className='buttons'>
-                <li key='Dashboard'>
-                  <Link className='btn' to='/VariableEditor'>Panel de Control</Link>
-                  <div className='Divider' />
-                </li>
-                <li key='Lineas'>
-                  <Link className='btn' to='/Lines'>Lineas</Link>
-                  <div className='Divider' />
-                </li>
-                <li key='Comentarios'>
-                  <Link className='btn' to='/Comments'>Comentarios</Link>
-                  <div className='Divider' />
-                </li>
-                <li key='CerrarSesion'>
-                  <Link className='btn' to='/' onClick={clearLocal}>Cerrar Sesion</Link>
-                  <div className='Divider' />
-                </li>
-                {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Download</li>}
-              </ul>
-             ) : (
-              <ul className='buttons'>
-                <li key='Perfil'>
-                  <Link className='btn' to='/Perfil'>Perfil</Link>
-                  <div className='Divider' />
-                </li>
-                <li key='Lineas'>
-                  <Link className='btn' to='/Lines'>Lineas</Link>
-                  <div className='Divider' />
-                </li>
-                <li key='Ayuda'>
-                  <Link className='btn' to='/Comments'>Comentarios</Link>
-                  <div className='Divider' />
-                </li>
-                {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Descargar</li>}
-              </ul>
-             ) : (
-              <ul className='buttons'>
-                <li key='Account'>
-                  <Link className='btn' to='/Account'>Cuenta</Link>
-                  <div className='Divider' />
-                </li>
-                <li key='Lineas'>
-                  <Link className='btn' to='/Lines'>Lineas</Link>
-                  <div className='Divider' />
-                </li>
-                <li key='Ayuda'>
-                  <Link className='btn' to='/HelpSection'>Ayuda</Link>
-                  <div className='Divider' />
-                </li>
-                {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Descargar</li>}
-              </ul>
-             ) }
+            )}
           </Nav>
 
-              {/* <ul className='buttons'>
+          {/* <ul className='buttons'>
                 <li key='Perfil'>
                   <Link className='btn' to='/Perfil'>Perfil</Link>
                   <div className='Divider' />
@@ -208,11 +254,10 @@ function NavBar(props) {
               {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Download</li>}
             </ul>
           </Nav> */}
-
         </Collapse>
       </Navbar>
     </div>
-  )
+  );
 }
 
-export { NavBar }
+export { NavBar };
