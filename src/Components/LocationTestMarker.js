@@ -84,7 +84,7 @@ function LocationTestMarker() {
                 <br />
                 Placa: {bus.bus_plate}
                 <br />
-                <Button onClick={()=> alerta()}>SOS</Button>
+                <Button color="danger" onClick={()=> alerta()}>SOS</Button>
               </div>
             </Popup>
           </Marker>

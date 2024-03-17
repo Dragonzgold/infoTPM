@@ -92,21 +92,21 @@ function NavBar(props) {
               user.usu_role === "user" || user.usu_role === "Driver" ? (
                 <ul className="buttons">
                   <li key="Perfil">
-                    <a className="btn" href="/Perfil" onClick={toggleNavbar}>
+                    <Link className="btn" to="/Perfil" onClick={toggleNavbar}>
                       Perfil
-                    </a>
+                    </Link>
                     <div className="Divider" />
                   </li>
                   <li key="Lineas">
-                    <a className="btn" href="/Lines">
+                    <Link className="btn" to="/Lines" onClick={toggleNavbar}>
                       Lineas
-                    </a>
+                    </Link>
                     <div className="Divider" />
                   </li>
                   <li key="Ayuda">
-                    <a className="btn" href="/HelpSection">
+                    <Link className="btn" to="/HelpSection" onClick={toggleNavbar}>
                       Ayuda
-                    </a>
+                    </Link>
                     <div className="Divider" />
                   </li>
                   <li key="CerrarSesion">
@@ -124,21 +124,21 @@ function NavBar(props) {
               ) : admin !== undefined ? (
                 <ul className="buttons">
                   <li key="Dashboard">
-                    <a className="btn" href="/VariableEditor">
+                    <Link className="btn" to="/VariableEditor" onClick={toggleNavbar}>
                       Panel de Control
-                    </a>
+                    </Link>
                     <div className="Divider" />
                   </li>
                   <li key="Lineas">
-                    <a className="btn" href="/Lines">
+                    <Link className="btn" to="/Lines" onClick={toggleNavbar}>
                       Lineas
-                    </a>
+                    </Link>
                     <div className="Divider" />
                   </li>
                   <li key="Comentarios">
-                    <a className="btn" href="/Comments">
+                    <Link className="btn" to="/Comments" onClick={toggleNavbar}>
                       Comentarios
-                    </a>
+                    </Link>
                     <div className="Divider" />
                   </li>
                   <li key="CerrarSesion">
@@ -156,21 +156,21 @@ function NavBar(props) {
               ) : (
                 <ul className="buttons">
                   <li key="Perfil">
-                    <a className="btn" href="/Perfil">
+                    <Link className="btn" to="/Perfil" onClick={toggleNavbar}>
                       Perfil
-                    </a>
+                    </Link>
                     <div className="Divider" />
                   </li>
                   <li key="Lineas">
-                    <a className="btn" href="/Lines">
+                    <Link className="btn" to="/Lines" onClick={toggleNavbar}>
                       Lineas
-                    </a>
+                    </Link>
                     <div className="Divider" />
                   </li>
                   <li key="Ayuda">
-                    <a className="btn" href="/Comments">
+                    <Link className="btn" to="/Comments" onClick={toggleNavbar}>
                       Comentarios
-                    </a>
+                    </Link>
                     <div className="Divider" />
                   </li>
                   {isReadyForInstall && (
@@ -183,21 +183,21 @@ function NavBar(props) {
             ) : (
               <ul className="buttons">
                 <li key="Account">
-                  <a className="btn" href="/Account">
+                  <Link className="btn" to="/Account" onClick={toggleNavbar}>
                     Cuenta
-                  </a>
+                  </Link>
                   <div className="Divider" />
                 </li>
                 <li key="Lineas">
-                  <a className="btn" href="/Lines">
+                  <Link className="btn" to="/Lines" onClick={toggleNavbar}>
                     Lineas
-                  </a>
+                  </Link>
                   <div className="Divider" />
                 </li>
                 <li key="Ayuda">
-                  <a className="btn" href="/HelpSection">
+                  <Link className="btn" to="/HelpSection" onClick={toggleNavbar}>
                     Ayuda
-                  </a>
+                  </Link>
                   <div className="Divider" />
                 </li>
                 {isReadyForInstall && (

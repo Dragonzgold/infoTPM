@@ -15,7 +15,6 @@ import {
   ModalBody,
   ModalFooter,
   Input,
-  NavbarToggler,
   Collapse,
 } from "reactstrap";
 import {
@@ -681,11 +680,7 @@ function Lines() {
               <Card className="cardLine">
                 <CardHeader className="card-head">
                   Linea: {index + 1}
-                  <Button className="btnArrow">
-                    <NavbarToggler
-                      onClick={() => toggleNavbar(line.lin_id)}
-                      className="stopDesplegable"
-                    />
+                  <Button onClick={() => toggleNavbar(line.lin_id)} className="btnArrow">
                     <IconArrowDown />
                   </Button>
                 </CardHeader>
