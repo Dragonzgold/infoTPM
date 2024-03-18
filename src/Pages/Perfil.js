@@ -32,28 +32,41 @@ import { LocationTestMarker } from "../Components/LocationTestMarker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBus } from "@fortawesome/free-solid-svg-icons";
 import { List } from "../Components/List";
+import { useHistory } from "react-router-dom";
 
 function NonStrictModal(props) {
   return <Modal {...props}>{props.children}</Modal>;
 }
 
 function Perfil() {
-  const [like, setLike] = useState(false);
+  const history = useHistory();
+  // const [like, setLike] = useState(false);
   const [modal, setModal] = useState(false);
   const [modal1, setModal1] = useState(false);
   const [show, setShow] = useState(false);
   const toggle = () => setModal(!modal);
   const test = () => setModal1(!modal1);
   const [selectedName, setSelectedName] = useState("");
-  const [testF, setTestF] = useState([]);
+  // const [testF, setTestF] = useState([]);
   const [bus, setBus] = useState([]);
   const [user, setUser] = useState([]);
-  const [com_idUser, setCom_idUser] = useState("");
-  const [com_idLine, setCom_idLine] = useState("");
+  // const [com_idUser, setCom_idUser] = useState("");
+  // const [com_idLine, setCom_idLine] = useState("");
   const [com_comment, setCom_comment] = useState("");
   const { url, accessToken } = useDataContext();
   const [modal2, setModal2] = useState(false);
   const [selectedNameMap, setSelectedNameMap] = useState("");
+  const [likes, setLikes] = useState({});
+  const [selectedLineId, setSelectedLineId] = useState(null);
+  const [verifyLike, setVerifyLike] = useState([]);
+  const fetchVerifyLike = useCallback(async () => {
+    try {
+      const response = await axios.get(`${url}/userline`);
+      setVerifyLike(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url]);
 
   const [line, setLine] = useState([]);
   const [paradas, setParadas] = useState([]);
@@ -456,13 +469,13 @@ function Perfil() {
           bus_status: "desactive",
         });
         fetchBus();
-      }else{
+      } else {
         axios.put(`${url}/bus/${buses.bus_id}`, {
           bus_status: "active",
         });
         fetchBus();
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const modalMap = (lin) => {
@@ -473,7 +486,7 @@ function Perfil() {
   const fetchTest = useCallback(async () => {
     try {
       const response = await axios.get(`${url}/userline`);
-      setTestF(response.data);
+      setVerifyLike(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -525,25 +538,48 @@ function Perfil() {
     fetchLine();
   }, [fetchDataUser, fetchTest, fetchBus, fetchStops, fetchLine]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     try {
       await axios.post(`${url}/comment/create`, {
         com_comment,
-        com_idUser,
-        com_idLine,
+        com_idUser: user.usu_id,
+        com_idLine: selectedLineId.lin_id,
       });
 
       setCom_comment("");
-      setCom_idUser("");
-      setCom_idLine("");
+      console.log(selectedLineId)
+      setSelectedLineId(null); // reset the selected line ID
+      toggle();
     } catch (error) {
-      console.log(error);
+      history.push({
+        pathname: "/Account",
+      });
     }
   };
 
-  const handleLike = () => {
-    setLike(!like);
+  const handleToggleLike = async (userId, lineId) => {
+    const userLiked =
+      verifyLike &&
+      verifyLike.find(
+        (like) => like.user.usu_id === userId && like.line.lin_id === lineId
+      );
+    try {
+      console.log(userLiked)
+      if (userLiked) {
+        await axios.delete(`${url}/userline/deletebyids/${userId}/${lineId}`);
+        setLikes({ ...likes, [lineId]: false });
+      } else {
+        await axios.post(`${url}/userline/create`, { userId, lineId });
+        setLikes({ ...likes, [lineId]: true });
+      }
+
+      // Fetch the likes again after the request is complete
+      fetchVerifyLike();
+    } catch (error) {
+      history.push({
+        pathname: "/Account",
+      });
+    }
   };
 
   return (
@@ -597,7 +633,7 @@ function Perfil() {
                 Estado:
                 {bus.map((buses) =>
                   user.usu_id === buses.user.usu_id ? (
-                    <Button onClick={() => handleActive(buses)} color={buses.bus_status==='active'?'success': 'danger'}>{buses.bus_status==='active'?'Activo': 'Inactivo'}</Button>
+                    <Button onClick={() => handleActive(buses)} color={buses.bus_status === 'active' ? 'success' : 'danger'}>{buses.bus_status === 'active' ? 'Activo' : 'Inactivo'}</Button>
                   ) : null
                 )}
                 <Modal
@@ -632,7 +668,7 @@ function Perfil() {
 
         <Container fluid className="contentP">
           <Row>
-            {testF.map((prueba, index) =>
+            {verifyLike.map((prueba, index) =>
               prueba.user.usu_id === user.usu_id ? (
                 <Col className="col">
                   <Card className="cardLine">
@@ -660,13 +696,30 @@ function Perfil() {
 
                       <div className="lineButtons">
                         <Button className="btn" type="button">
-                          {like ? (
-                            <FaHeart className="icon" onClick={handleLike} />
+                          {likes[prueba.line.lin_id] ? (
+                            <FaHeart
+                              className="icon"
+                              onClick={() =>
+                                handleToggleLike(user.usu_id, prueba.line.lin_id)
+                              }
+                            />
                           ) : (
-                            <FaRegHeart className="icon" onClick={handleLike} />
+                            <FaRegHeart
+                              className="icon"
+                              onClick={() =>
+                                handleToggleLike(user.usu_id, prueba.line.lin_id)
+                              }
+                            />
                           )}
                         </Button>
-                        <Button className="btn" type="button" onClick={toggle}>
+                        <Button
+                          className="btn"
+                          type="button"
+                          onClick={() => {
+                            toggle();
+                            setSelectedLineId(prueba.line);
+                          }}
+                        >
                           <FaRegCommentDots className="icon" />
                         </Button>
                         <div className="Modal-comment">

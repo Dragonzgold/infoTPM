@@ -119,7 +119,7 @@ function Account() {
                 className='containerCorreo'
                 type="email"
                 value={usu_email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value).toLowerCase()}
                 name="email"
                 id="exampleEmail"
                 placeholder="Introduzca su correo"

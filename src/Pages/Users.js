@@ -190,7 +190,7 @@ function Users() {
             </div>
             <div className="col-md-6">
               <label className="form-label">
-                apellido:
+                Apellido:
               </label>
               <Input
                 type="text"
@@ -237,7 +237,7 @@ function Users() {
                   checked={usu_role === 'Driver'}
                   onChange={e => setRole(e.target.value)}
                 />
-                Driver
+                Conductor
               </Label>
             </div>
           </form>

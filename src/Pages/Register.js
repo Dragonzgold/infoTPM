@@ -27,7 +27,6 @@ function Register() {
           usu_password,
           usu_role: "user",
         });
-        await axios.post(`${url}/Mailer/EmailWelcome/${usu_email}`);
         toast.success("¡Registro exitoso!", {
           position: "bottom-right",
           autoClose: 5000,
@@ -37,13 +36,14 @@ function Register() {
           draggable: true,
           progress: undefined,
         });
+        await axios.post(`${url}/Mailer/EmailWelcome/${usu_email}`);
 
         setName("");
         setLastname("");
         setEmail("");
         setPassword("");
-
         history.push("/Account");
+
       } catch (error) {
         toast.error(error, {
           position: "bottom-right",
@@ -118,7 +118,7 @@ function Register() {
               type="email"
               name="email"
               defaultValue={usu_email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value).toLowerCase()}
               id="exampleEmail"
               placeholder="Introduzca su correo..."
               required
@@ -140,7 +140,7 @@ function Register() {
 
             <div className="RegisterButtons">
               <Link to="/Account">
-                <button className="botonVolverRegistro btnRegister">
+                <button type="button" className="botonVolverRegistro btnRegister">
                   Volver
                 </button>
               </Link>
