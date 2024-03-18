@@ -18,11 +18,6 @@ function StopsEdit() {
   const [par_long, setLong] = useState("");
   const [par_description, setDesc] = useState("");
   const [par_linId, setPar_linId] = useState(Number);
-  const [lin_Entrada, setEntrada] = useState("");
-  const [lin_Salida, setSalida] = useState("");
-  const [selectedHourUp, setSelectedHourUp] = useState("");
-  const [selectedHour, setSelectedHour] = useState("");
-  const [par_img, setPar_img] = useState("");
   const [stop, setStops] = useState([]);
   const [lines, setLines] = useState([]);
   const [selectedStop, setSelectedStop] = useState(null);
@@ -35,8 +30,6 @@ function StopsEdit() {
       setLat("");
       setLong("");
       setDesc("");
-      setEntrada("");
-      setSalida("");
     }
   };
   console.log(modal);
@@ -82,8 +75,6 @@ function StopsEdit() {
     setLat(stop.par_lat);
     setLong(stop.par_long);
     setDesc(stop.par_description);
-    setEntrada(stop.Line.lin_scheduleStart);
-    setSalida(stop.Line.lin_scheduleEnd);
   };
 
   const handleDelete = async (id) => {
@@ -96,46 +87,32 @@ function StopsEdit() {
   };
 
   const handleSave = async () => {
-    if (lin_Salida > 0 && lin_Salida < 13) {
-      if (lin_Entrada > 0 && lin_Entrada < 13) {
-        try {
-          if (selectedStop) {
-            await axios.put(`${url}/Stops/${selectedStop.par_id}`, {
-              par_name,
-              par_lat,
-              par_long,
-              par_description,
-              par_linId,
-              par_img,
-              lin_scheduleStart: `${lin_Entrada} ${selectedHourUp}`,
-              lin_scheduleEnd: `${lin_Salida} ${selectedHour}`,
-            });
-          } else {
-            await axios.post(`${url}/Stops/create`, {
-              par_name,
-              par_lat,
-              par_long,
-              par_description,
-              par_linId,
-              par_img,
-              lin_scheduleStart: `${lin_Entrada} ${selectedHourUp}`,
-              lin_scheduleEnd: `${lin_Salida} ${selectedHour}`,
-            });
-          }
-          setName("");
-          setLat("");
-          setLong("");
-          setDesc("");
-          fetchData();
-          toggle();
-        } catch (error) {
-          console.log(error);
-        }
+    try {
+      if (selectedStop) {
+        await axios.put(`${url}/Stops/${selectedStop.par_id}`, {
+          par_name,
+          par_lat,
+          par_long,
+          par_description,
+          par_linId,
+        });
       } else {
-        alert("Introdujo horas invalidas (1 - 12)");
+        await axios.post(`${url}/Stops/create`, {
+          par_name,
+          par_lat,
+          par_long,
+          par_description,
+          par_linId,
+        });
       }
-    } else {
-      alert("Introdujo horas invalidas (1 - 12)");
+      setName("");
+      setLat("");
+      setLong("");
+      setDesc("");
+      fetchData();
+      toggle();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -173,7 +150,6 @@ function StopsEdit() {
                   <th>Latitud</th>
                   <th>Longitud</th>
                   <th>Descripción</th>
-                  <th>Horario</th>
                   <th>Funciones</th>
                 </tr>
               </thead>
@@ -185,7 +161,6 @@ function StopsEdit() {
                     <td>{stop.par_lat}</td>
                     <td>{stop.par_long}</td>
                     <td>{stop.par_description}</td>
-                    <td>{stop.Line.lin_scheduleStart} - {stop.Line.lin_scheduleEnd}</td>
                     <td>
                       <Button color="primary" onClick={() => handleEdit(stop)}>
                         Editar
@@ -250,7 +225,7 @@ function StopsEdit() {
                 required
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-12">
               <label for="par_linId" className="form-label">
                 Linea:
               </label>
@@ -271,19 +246,6 @@ function StopsEdit() {
                 ))}
               </Input>
             </div>
-            <div className="col-md-6">
-              <label for="par_img" className="form-label">
-                Imagen:
-              </label>
-              <Input
-                id="par_img"
-                name="par_img"
-                type="file"
-                required
-                accept=".jpg,.jpeg,.png,"
-                onChange={(e) => setPar_img(e.target.value)}
-              />
-            </div>
             <div className="col-md-12">
               <label for="longitud" className="form-label">
                 Descripción:
@@ -296,70 +258,13 @@ function StopsEdit() {
                 id="descripcion"
               />
             </div>
-            <div className="col-md-6">
-              <label for="longitud" className="form-label">
-                Horario:
-              </label>
-              <br />
-              <p style={{ display: "inline" }}>Entrada:</p>
-              <Input
-                type="number"
-                min={"1"}
-                max={"12"}
-                defaultValue={lin_Entrada}
-                onChange={(e) => setEntrada(e.target.value)}
-                className="form-control"
-                style={{ display: "inline", width: "10vw" }}
-                id="horaEntrada"
-              />
-              <Input
-                bsSize="sm"
-                className="mb-3"
-                type="select"
-                style={{ width: "7vw", display: "inline" }}
-                value={selectedHour}
-                onChange={(e) => setSelectedHour(e.target.value)}
-                required
-              >
-                <option> </option>
-                <option value={"AM"}>AM</option>
-                <option value={"PM"}>PM</option>
-              </Input>
-              <br />
-              <p style={{ display: "inline" }}>Salida:</p>
-              <Input
-                type="number"
-                min={"1"}
-                max={"12"}
-                defaultValue={lin_Salida}
-                onChange={(e) => setSalida(e.target.value)}
-                className="form-control"
-                style={{ display: "inline", width: "10vw" }}
-                id="horaSalida"
-              />
-              <Input
-                bsSize="sm"
-                className="mb-3"
-                type="select"
-                style={{ width: "6.5vw", display: "inline" }}
-                value={selectedHourUp}
-                onChange={(e) => setSelectedHourUp(e.target.value)}
-                required
-              >
-                <option> </option>
-                <option value={"AM"}>AM</option>
-                <option value={"PM"}>PM</option>
-              </Input>
-            </div>
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button
-            type="button"
-            onClick={handleSave}
-            color="primary"
-            disabled={selectedHour === "" || selectedHourUp === ""}
-          >
+          <Button type="button" onClick={handleSave} color="primary"
+          disabled={
+            (par_name==="")||(par_lat==="")||(par_long==="")||(par_description==="")||(par_linId==="")
+          }>
             Guardar cambios
           </Button>
           <Button color="secondary" onClick={toggle}>

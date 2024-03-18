@@ -81,6 +81,9 @@ function Perfil() {
     //Mapa de la Guajira
     if (imgLine === "Guajira") {
       const limeOptions = { color: "lime" };
+      const coordsGuajira = List.find(
+        (elemento) => elemento.nombre === "Guajira"
+      )?.coords;
       return (
         <div className="MapViewGuajira">
           <MapContainer
@@ -135,7 +138,7 @@ function Perfil() {
             />
             {/* <LocationMarker /> */}
             <LocationTestMarker />
-            <Polyline pathOptions={limeOptions} positions={List.Guajira} />
+            <Polyline pathOptions={limeOptions} positions={coordsGuajira} />
           </MapContainer>
         </div>
       );
@@ -143,6 +146,9 @@ function Perfil() {
     if (imgLine === "Veritas") {
       //Mapa de Veritas
       const blueOptions = { color: "blue" };
+      const coordsVeritas = List.find(
+        (elemento) => elemento.nombre === "Veritas"
+      )?.coords;
       return (
         <div className="MapViewVerita">
           <MapContainer
@@ -197,7 +203,7 @@ function Perfil() {
             />
             {/* <LocationMarker /> */}
             <LocationTestMarker />
-            <Polyline pathOptions={blueOptions} positions={List.Veritas} />
+            <Polyline pathOptions={blueOptions} positions={coordsVeritas} />
           </MapContainer>
         </div>
       );
@@ -205,6 +211,9 @@ function Perfil() {
     if (imgLine === "Milagro") {
       //Mapa de Milagro
       const redOptions = { color: "red" };
+      const coordsMilagro = List.find(
+        (elemento) => elemento.nombre === "Milagro"
+      )?.coords;
       return (
         <div className="MapViewGuajira">
           <MapContainer
@@ -259,7 +268,7 @@ function Perfil() {
             />
             {/* <LocationMarker /> */}
             <LocationTestMarker />
-            <Polyline pathOptions={redOptions} positions={List.Milagro} />
+            <Polyline pathOptions={redOptions} positions={coordsMilagro} />
           </MapContainer>
         </div>
       );
@@ -267,6 +276,9 @@ function Perfil() {
     if (imgLine === "Galeria") {
       //Mapa de Galeria
       const cyanOptions = { color: "cyan" };
+      const coordsGaleria = List.find(
+        (elemento) => elemento.nombre === "Galeria"
+      )?.coords;
       return (
         <div className="MapViewGuajira">
           <MapContainer
@@ -321,7 +333,7 @@ function Perfil() {
             />
             {/* <LocationMarker /> */}
             <LocationTestMarker />
-            <Polyline pathOptions={cyanOptions} positions={List.galeria} />
+            <Polyline pathOptions={cyanOptions} positions={coordsGaleria} />
           </MapContainer>
         </div>
       );
@@ -329,6 +341,9 @@ function Perfil() {
     if (imgLine === "Cinco de Julio") {
       //Mapa de cinco de Julio
       const greenOptions = { color: "green" };
+      const coordsCincoDeJulio = List.find(
+        (elemento) => elemento.nombre === "Cinco de Julio"
+      )?.coords;
       return (
         <div className="MapViewGuajira">
           <MapContainer
@@ -383,7 +398,7 @@ function Perfil() {
             />
             {/* <LocationMarker /> */}
             <LocationTestMarker />
-            <Polyline pathOptions={greenOptions} positions={List.julio5} />
+            <Polyline pathOptions={greenOptions} positions={coordsCincoDeJulio} />
           </MapContainer>
         </div>
       );
@@ -391,6 +406,9 @@ function Perfil() {
     if (imgLine === "Bella Vista") {
       //Mapa de bella Vista
       const yellowOptions = { color: "yellow" };
+      const coordsBellaVista = List.find(
+        (elemento) => elemento.nombre === "Bella Vista"
+      )?.coords;
       return (
         <div className="MapViewGuajira">
           <MapContainer
@@ -445,7 +463,7 @@ function Perfil() {
             />
             {/* <LocationMarker /> */}
             <LocationTestMarker />
-            <Polyline pathOptions={yellowOptions} positions={List.sinNombre} />
+            <Polyline pathOptions={yellowOptions} positions={coordsBellaVista} />
           </MapContainer>
         </div>
       );
@@ -475,7 +493,7 @@ function Perfil() {
         });
         fetchBus();
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const modalMap = (lin) => {
@@ -547,7 +565,7 @@ function Perfil() {
       });
 
       setCom_comment("");
-      console.log(selectedLineId)
+      console.log(selectedLineId);
       setSelectedLineId(null); // reset the selected line ID
       toggle();
     } catch (error) {
@@ -564,7 +582,7 @@ function Perfil() {
         (like) => like.user.usu_id === userId && like.line.lin_id === lineId
       );
     try {
-      console.log(userLiked)
+      console.log(userLiked);
       if (userLiked) {
         await axios.delete(`${url}/userline/deletebyids/${userId}/${lineId}`);
         setLikes({ ...likes, [lineId]: false });
@@ -633,7 +651,14 @@ function Perfil() {
                 Estado:
                 {bus.map((buses) =>
                   user.usu_id === buses.user.usu_id ? (
-                    <Button onClick={() => handleActive(buses)} color={buses.bus_status === 'active' ? 'success' : 'danger'}>{buses.bus_status === 'active' ? 'Activo' : 'Inactivo'}</Button>
+                    <Button
+                      onClick={() => handleActive(buses)}
+                      color={
+                        buses.bus_status === "active" ? "success" : "danger"
+                      }
+                    >
+                      {buses.bus_status === "active" ? "Activo" : "Inactivo"}
+                    </Button>
                   ) : null
                 )}
                 <Modal
@@ -676,7 +701,7 @@ function Perfil() {
                     <CardBody className="card-body">
                       <CardTitle
                         className="card-tittle"
-                        onClick={() => handleShow()}
+                        onClick={() => handleShow(prueba.line.lin_name)}
                       >
                         {prueba.line.lin_name}
                       </CardTitle>
@@ -691,7 +716,9 @@ function Perfil() {
                         <ModalHeader toggle={handleClose}>
                           Visualización {selectedName}
                         </ModalHeader>
-                        <ModalBody>Contenido del modal</ModalBody>
+                        <ModalBody style={{ margin: "0 auto", width: "80%" }}>
+                          {imgMapLine(selectedName)}
+                        </ModalBody>
                       </NonStrictModal>
 
                       <div className="lineButtons">
@@ -700,14 +727,20 @@ function Perfil() {
                             <FaHeart
                               className="icon"
                               onClick={() =>
-                                handleToggleLike(user.usu_id, prueba.line.lin_id)
+                                handleToggleLike(
+                                  user.usu_id,
+                                  prueba.line.lin_id
+                                )
                               }
                             />
                           ) : (
                             <FaRegHeart
                               className="icon"
                               onClick={() =>
-                                handleToggleLike(user.usu_id, prueba.line.lin_id)
+                                handleToggleLike(
+                                  user.usu_id,
+                                  prueba.line.lin_id
+                                )
                               }
                             />
                           )}
@@ -751,7 +784,8 @@ function Perfil() {
                       </div>
                     </CardBody>
                     <CardFooter className="card-footer">
-                      <div className="Horario">Horario: 7am - 8pm</div>
+                      <div className="Horario">Horario: {prueba.line.lin_scheduleStart} - {prueba.line.lin_scheduleEnd}
+                      </div>
                       <div className="Pasaje">
                         Pasaje: {prueba.line.lin_price}Bs.
                       </div>

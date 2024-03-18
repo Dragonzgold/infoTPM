@@ -346,7 +346,7 @@ function LinesEdit() {
         <ModalFooter>
           <Button type="button" 
           disabled={
-            (selectedHour === "")||(selectedHourUp === "")
+            (selectedHour === "")||(selectedHourUp === "")||(lin_name==="")||(lin_start==="")||(lin_close==="")||(lin_exit_point==="")||(lin_arrival_point==="")||(lin_price==="")
           }
           onClick={handleSave} color="primary">
             Guardar cambios

@@ -206,7 +206,7 @@ function Users() {
                 Correo:
               </label>
               <Input
-                type="text"
+                type="email"
                 className="form-control"
                 defaultValue={usu_email}
                 onChange={event => setEmail(event.target.value)}
@@ -243,7 +243,9 @@ function Users() {
           </form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleSubmit}>
+          <Button color="primary" onClick={handleSubmit}
+          disabled={(usu_name==="")||(usu_lastName==="")||(usu_email==="")||(usu_role==="")}
+          >
             Guardar
           </Button>
           <Button color="secondary" onClick={toggle}>
