@@ -22,6 +22,8 @@ function LinesEdit() {
   const [lin_Entrada, setEntrada] = useState("");
   const [lin_Salida, setSalida] = useState("");
   const [line, setLine] = useState([]);
+  const [selectedHour, setSelectedHour] = useState("");
+  const [selectedHourUp, setSelectedHourUp] = useState("");
   const [selectedLine, setSelectedLine] = useState(null);
   const [modal, setModal] = useState(false);
   const toggle = () => {
@@ -95,8 +97,8 @@ function LinesEdit() {
           lin_exit_point,
           lin_arrival_point,
           lin_price,
-          lin_Entrada,
-          lin_Salida,
+          lin_scheduleStart: `${lin_Entrada} ${selectedHourUp}`,
+          lin_scheduleEnd: `${lin_Salida} ${selectedHour}`
         });
       } else {
         await axios.post(`${url}/line/create`, {
@@ -106,8 +108,8 @@ function LinesEdit() {
           lin_exit_point,
           lin_arrival_point,
           lin_price,
-          lin_Entrada,
-          lin_Salida,
+          lin_scheduleStart: `${lin_Entrada} ${selectedHourUp}`,
+          lin_scheduleEnd: `${lin_Salida} ${selectedHour}`
         });
       }
       fetchData();
@@ -296,9 +298,13 @@ function LinesEdit() {
                 className="mb-3"
                 type="select"
                 style={{ width: "7vw", display: "inline" }}
+                value={selectedHour}
+                onChange={(e) => setSelectedHour(e.target.value)}
+                required
               >
-                <option>AM</option>
-                <option>PM</option>
+                <option> </option>
+                <option value={"AM"}>AM</option>
+                <option value={"PM"}>PM</option>
               </Input>
               <br />
               <p style={{ display: "inline" }}>Salida:</p>
@@ -319,15 +325,23 @@ function LinesEdit() {
                 className="mb-3"
                 type="select"
                 style={{ width: "6.5vw", display: "inline" }}
+                value={selectedHourUp}
+                onChange={(e) => setSelectedHourUp(e.target.value)}
+                required
               >
-                <option>AM</option>
-                <option>PM</option>
+                <option> </option>
+                <option value={"AM"}>AM</option>
+                <option value={"PM"}>PM</option>
               </Input>
             </div>
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button type="button" onClick={handleSave} color="primary">
+          <Button type="button" 
+          disabled={
+            (selectedHour === "")||(selectedHourUp === "")
+          }
+          onClick={handleSave} color="primary">
             Guardar cambios
           </Button>
           <Button color="secondary" onClick={toggle}>
