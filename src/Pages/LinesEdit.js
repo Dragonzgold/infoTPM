@@ -88,34 +88,43 @@ function LinesEdit() {
   };
 
   const handleSave = async () => {
-    try {
-      if (selectedLine) {
-        await axios.put(`${url}/Line/${selectedLine.lin_id}`, {
-          lin_name,
-          lin_start,
-          lin_close,
-          lin_exit_point,
-          lin_arrival_point,
-          lin_price,
-          lin_scheduleStart: `${lin_Entrada} ${selectedHourUp}`,
-          lin_scheduleEnd: `${lin_Salida} ${selectedHour}`
-        });
-      } else {
-        await axios.post(`${url}/line/create`, {
-          lin_name,
-          lin_start,
-          lin_close,
-          lin_exit_point,
-          lin_arrival_point,
-          lin_price,
-          lin_scheduleStart: `${lin_Entrada} ${selectedHourUp}`,
-          lin_scheduleEnd: `${lin_Salida} ${selectedHour}`
-        });
+    if(lin_Salida >0 && lin_Salida <13){
+      if(lin_Entrada >0 && lin_Entrada <13){
+
+        try {
+          if (selectedLine) {
+            await axios.put(`${url}/Line/${selectedLine.lin_id}`, {
+              lin_name,
+              lin_start,
+              lin_close,
+              lin_exit_point,
+              lin_arrival_point,
+              lin_price,
+              lin_scheduleStart: `${lin_Entrada} ${selectedHourUp}`,
+              lin_scheduleEnd: `${lin_Salida} ${selectedHour}`
+            });
+          } else {
+            await axios.post(`${url}/line/create`, {
+              lin_name,
+              lin_start,
+              lin_close,
+              lin_exit_point,
+              lin_arrival_point,
+              lin_price,
+              lin_scheduleStart: `${lin_Entrada} ${selectedHourUp}`,
+              lin_scheduleEnd: `${lin_Salida} ${selectedHour}`
+            });
+          }
+          fetchData();
+          toggle();
+        } catch (error) {
+          console.log(error);
+        }
+      }else{
+        alert("Introdujo horas invalidas (1 - 12)")
       }
-      fetchData();
-      toggle();
-    } catch (error) {
-      console.log(error);
+    }else{
+      alert("Introdujo horas invalidas (1 - 12)")
     }
   };
 
@@ -154,6 +163,7 @@ function LinesEdit() {
                   <th>Longitud (Inicio)</th>
                   <th>Latitud (Llegada)</th>
                   <th>Longitud (Llegada)</th>
+                  <th>Horario</th>
                   <th>Precio</th>
                   <th>Funciones</th>
                 </tr>
@@ -167,6 +177,7 @@ function LinesEdit() {
                     <td>{line.lin_close}</td>
                     <td>{line.lin_exit_point}</td>
                     <td>{line.lin_arrival_point}</td>
+                    <td>{line.lin_scheduleStart}-{line.lin_scheduleEnd}</td>
                     <td>{line.lin_price} Bs.</td>
                     <td>
                       <Button color="primary" onClick={() => handleEdit(line)}>
@@ -283,15 +294,13 @@ function LinesEdit() {
               <p style={{ display: "inline" }}>Entrada:</p>
               <Input
                 type="number"
+                min={"1"}
+                max={"12"}
                 defaultValue={lin_Entrada}
                 onChange={(e) => setEntrada(e.target.value)}
                 className="form-control"
                 style={{ display: "inline", width: "10vw" }}
                 id="horaEntrada"
-                pattern="^[0-9]*$"
-                min={1}
-                max={12}
-                required
               />
               <Input
                 bsSize="sm"
@@ -310,15 +319,13 @@ function LinesEdit() {
               <p style={{ display: "inline" }}>Salida:</p>
               <Input
                 type="number"
+                min= {"1"}
+                max={"12"}
                 defaultValue={lin_Salida}
                 onChange={(e) => setSalida(e.target.value)}
                 className="form-control"
                 style={{ display: "inline", width: "10vw" }}
                 id="horaSalida"
-                min={1}
-                max={12}
-                pattern="^[0-9]*$"
-                required
               />
               <Input
                 bsSize="sm"
